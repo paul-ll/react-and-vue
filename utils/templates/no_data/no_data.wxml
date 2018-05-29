@@ -1,7 +1,0 @@
-<template name='noData'>
-  <view  class='bgColor' hidden='{{!noData}}'>
-    <image class='img' mode='widthFix' src='{{imgUrl}}'></image>
-    <view class='noDataText'>{{noDataText}}</view>
-    <view class='reconnect' hidden='{{hiddenConnect}}' bindtap='noDataAction'>重新加载</view>
-  </view>
-</template>

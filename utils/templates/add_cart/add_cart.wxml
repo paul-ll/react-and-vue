@@ -1,6 +1,0 @@
-<template name="add-cart-animation">
-  <!--加车动画  -->
-  <view class='animation-element'  animation="{{animationY}}" style='{{anViewY}}'>
-    <view class='animation-element' animation="{{animationX}}" style='{{anViewX}}'></view>
-  </view>
-</template>

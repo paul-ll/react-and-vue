@@ -1,9 +1,0 @@
-{
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "bargain_alert": "/pages/active_page/bargain/components/bargain_alert/bargain_alert",
-    "goods_item": "/pages/active_page/bargain/components/goods_item/goods_item",
-    "count_down": "/pages/active_page/bargain/components/count_down/count_down",
-    "user_no_rule": "/utils/components/user_no_rule/user_no_rule"
-   }
-}

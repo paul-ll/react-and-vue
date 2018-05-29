@@ -1,6 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "count_down": "/pages/active_page/bargain/components/count_down/count_down"
-   }
-}

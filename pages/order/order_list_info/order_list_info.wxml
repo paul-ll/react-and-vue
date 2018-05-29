@@ -1,3 +1,0 @@
-<import src="/utils/templates/order_list_info/order_list_info.wxml"></import>
-
-<template is="order-list-info" data="{{orderExpressMsg}}"></template>  

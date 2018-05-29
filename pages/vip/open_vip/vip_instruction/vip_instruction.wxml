@@ -1,4 +1,0 @@
-<!-- 会员卡说明 页 -->
-<view class="container">
-  <image src="{{href}}" />
-</view>

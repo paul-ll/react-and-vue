@@ -1,5 +1,0 @@
-/* pages/active_page/group_scan.wxss */
-.scan-img {
-  width: 100%;
-  display: block;
-}

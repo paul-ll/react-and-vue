@@ -1,6 +1,0 @@
-/* 超出限定宽度的文字不折行, 且用...表示 */
-.ellipsis {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}

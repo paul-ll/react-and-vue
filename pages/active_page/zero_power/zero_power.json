@@ -1,7 +1,0 @@
-{
-  "enablePullDownRefresh": false,
-  "navigationBarTitleText": "免费试吃" ,
-  "usingComponents": {
-    "user_no_rule": "/utils/components/user_no_rule/user_no_rule"
-  } 
-}

@@ -1,5 +1,0 @@
-<template name="loading">
-  <view class="loading-wrapper">
-    <image class="loading-image" src="/images/loading.gif"></image>
-  </view>
-</template>
