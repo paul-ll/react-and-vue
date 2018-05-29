@@ -1,0 +1,40 @@
+
+<import src="/utils/templates/loading/loading.wxml" />
+<template is="loading" wx:if='{{loading}}' />
+<import src="../../../utils/templates/no_network/no_network.wxml" />
+<template is="network" data="{{...network}}" />
+
+<block wx:if="{{reconnecting == true}}">
+  <view class="network-reconnect">
+    <image class="loadingimg" src='/images/loading-gif-vip.gif' mode='aspectFit'></image>
+  </view>
+</block>
+
+<view class="showSwiper" style='width: {{winWidth}}px;height: {{winHeight}}px;' wx:if="{{isShow}}">
+  <view class='showSwiperList'
+        bindtouchstart='swiperTouchstart'
+        bindtouchmove='swiperTouchmove'
+        bindtouchend='swiperTouchend'
+        style='width: {{allWidth}}px;position: relative;left: {{(winWidth-itemWidth)/2}}px;'>
+
+    <block wx:for="{{swiperList}}" wx:key="{{swiperList.name}}">
+       <view class='swiperItem' 
+            data-curid="{{curIndex}}" 
+            data-index='{{index}}' 
+            animation="{{curIndex == index? animationToLarge : animationToSmall}}" 
+            style='width: {{itemWidth}}px;height: {{itemWidth*1.6}}px;transform: scale({{curIndex == index ? 1 : scale}});-'>
+          <image class="swiperItemImg" src='{{item.descImage}}' mode='aspectFit'></image>
+      </view>
+    </block>
+   
+  </view>
+  <scroll-view scroll-x style="width:100%" class="container" scroll-left="{{position}}">
+      <view  wx:for="{{swiperList}}" bindtap="channgeTab" data-index="{{index}}" class="{{index == 0?'iconCon firstChild':'iconCon'}}" wx:key="{{swiperList.name}}">
+        <image src="{{curIndex == index ? item.descSelectIcon:item.descUnselectIcon}}" class="{{curIndex == index ?'iconSelect':'icon'}}"/>
+        <text class="{{curIndex == index ?'selectText':'iconText'}}">{{item.name}}</text>
+      </view>
+  </scroll-view>
+  <view wx:if="{{isLoad==false}}">
+      <image src="/images/loading-gif-vip.gif" class="loading"></image>
+  </view>
+</view>

@@ -1,0 +1,121 @@
+<!--detail.wxml-->
+<import src="/utils/templates/wetoast/wetoast.wxml"/>
+<template is="wetoast" data="{{...__wetoast__}}"/>
+<import src="/utils/templates/no_network/no_network.wxml"/>
+<template is="network" data="{{...network}}"/>
+<import src="/utils/templates/product_single/product_single.wxml"></import>
+<!-- 小神推事件抓取组件 -->
+<import src="../../template/template.wxml" />
+<template wx:if="{{!is_showHideBtn}}" is='hideBtn'data="{{hideBtnData}}"></template>
+<!--加车动画  -->
+<import src="/utils/templates/add_cart/add_cart.wxml" />
+<template is="add-cart-animation" data="{{...__addcart__}}"/>
+<view class="container">
+  <!--<view class="title-view">
+    <button bindtap="back" size="mini" plain="true" loading="true">返回</button>
+    <view class="sku-name">{{productDetail.name}}</view>
+  </view>-->
+  <!--<view class="banner section">
+      <swiper indicator-dots="true" autoplay="true" interval="2000" duration="1000" style="width: 100%">
+        <block wx:for="{{banners}}" wx:for-item="banner">
+          <swiper-item>
+            <image src="{{banner.imageUrl}}" class="slide-image" />
+          </swiper-item>
+        </block>
+      </swiper>
+  </view>-->
+
+  <view class="products-section">
+    <scroll-view class="products-scroll-view" scroll-y="true" bindtouchend='touchE'>
+        <view class="detail-section">
+            <swiper indicator-dots="true" autoplay="false" interval="4000" duration="200" class='detail-swiper'>
+                <block wx:for="{{productDetail.images}}" wx:for-item="detailImage" wx:key="*this">
+                    <swiper-item>
+                        <image src="{{detailImage}}" class="slide-detail-image" mode="aspectFit"/>
+                    </swiper-item>
+                </block>
+            </swiper>
+        </view>
+        <view class="product-detail-info">
+            <view class="product-outline">
+                <view class="product-detail-name">{{productDetail.name}}</view>
+                <view class="product-detail-subtitle">{{productDetail.subtitle}}</view>
+                <view class="product-price-up {{productDetail.vip_price_pro.price_up.show_type == 2 ? 'line-through' : ''}}" wx:if="{{productDetail.vip_price_pro.price_up.show_type != 0 && productDetail.vip_price_pro.price_up.show_type != 2}}" style="color: {{productDetail.vip_price_pro.price_up.color}}">
+                    <text class="product-price-tag">{{productDetail.vip_price_pro.price_up.name}}</text>
+                    <text class="product-price-value">¥{{productDetail.vip_price_pro.price_up.price/100.0 || 0}}</text>
+                </view>
+                <view class="product-price {{productDetail.vip_price_pro.price_down.show_type == 2 ? 'line-through' : ''}}" wx:if="{{productDetail.vip_price_pro.price_down.show_type != 0}}"
+                    style="color: {{productDetail.vip_price_pro.price_down.color}}">
+                    <view class="product-detail-vipprice-name" wx:if="{{!productDetail.vip_price_pro.price_down.showTag && productDetail.vip_price_pro.price_up.show_type != 2}}">{{productDetail.vip_price_pro.price_down.name}}</view>
+                    <view class="product-detail-vipprice">¥{{productDetail.vip_price_pro.price_down.price/100.0 || 0}}</view>
+                    <image class="price-tag" wx:if="{{miniStartInfo && miniStartInfo.priceTag && productDetail.vip_price_pro.price_up.show_type != 2 && productDetail.vip_price_pro.price_down.showTag == 1}}"
+                        src="{{miniStartInfo && miniStartInfo.priceTag}}" style="height: 22rpx; width: {{priceTagWidth}}rpx" bindload="getPriceTagWidth"></image>
+                    <block wx:if="{{productDetail.vip_price_pro.price_up.show_type == 2}}">
+                        <text class="price-right {{productDetail.vip_price_pro.price_up.show_type == 2 ? 'line-through' : ''}}" style="color: {{productDetail.vip_price_pro.price_up.color}}">￥{{productDetail.vip_price_pro.price_up.price/100}}</text>
+                    </block>
+                    <view class="product-detail-sales-volume">已售 {{productDetail.sales_volume}}份</view>
+                </view>
+
+                <view class="product-transport-root">
+                    <view class="product-transport-container" wx:if="{{productDetail.country!=null}}">
+                        <view class="product-transport-point"></view>
+                        <view class="product-transport">{{productDetail.country}}</view>
+                    </view>
+                    <view class="product-transport-container" wx:if="{{productDetail.delivery_mode_name!=null}}">
+                        <view class="product-transport-point"></view>
+                        <view class="product-transport">{{productDetail.delivery_mode_name}}</view>
+                    </view>
+                    <view class="product-transport-container" wx:if="{{productDetail.promotion[0]!=null}}">
+                        <view class="product-transport-point"></view>
+                        <view class="product-transport">{{productDetail.promotion[0]}}</view>
+                    </view>
+                </view>
+            </view>
+            <!--推荐商品@guozhen  -->
+            <view wx:if="{{productInfo.products.length > 0}}" class='recom-product-title'>推荐商品</view>
+                                                                                        <!-- data="{{products:recomProducts,productFromCartInfos,listPosition:'shoppingCart',promotionTags,priceTagUrl: miniStartInfo && miniStartInfo.priceTag,priceTagWidth}}" -->
+            <template wx:if="{{productInfo.products.length > 0}}" is="productHSlipItem" data="{{...productInfo, productFromCartInfos,listPosition:'productDetail',promotionTags,priceTagUrl: miniStartInfo && miniStartInfo.priceTag,priceTagWidth}}"></template>
+            <view class="product-format">
+                <view class="product-unit">规格</view>
+                <view class="content-detail">
+                    <view class="product-detail-brand" wx:if="{{productDetail.brand}}">品牌: {{productDetail.brand}}</view>
+                    <view class="product-detail-weight" wx:if="{{productDetail.weight}}">重量: {{productDetail.weight}}</view>
+                    <view class="product-detail-pack" wx:if="{{productDetail.pack}}">包装: {{productDetail.pack}}</view>
+                    <view class="product-detail-material" wx:if="{{productDetail.material}}">配料表: {{productDetail.material}}</view>
+                    <view class="product-detail-storagetime" wx:if="{{productDetail.storage_time}}">保质期: {{productDetail.storage_time}}</view>
+                    <view class="product-detail-storagemethod" wx:if="{{productDetail.storage_method}}">贮存方法: {{productDetail.storage_method}}</view>
+                </view>
+            </view>
+
+            <view class="product-detail-picture" wx:if="{{productDetail.instruction.length > 0}}">
+                <block wx:for="{{productDetail.instruction}}" wx:for-item="instruction">
+                    <image src="{{instruction.image}}" class="detail-instruction-image" mode="widthFix"/>
+                    <view class="section-title" wx:if="{{instruction.title}}">{{instruction.title}}</view>
+                    <view class="section-description" wx:if="{{instruction.description}}">{{instruction.description}}</view>
+                </block>
+            </view>
+            <!--全国送商品隐藏-->
+            <!--<view class="product-detail-nationwide" wx:if="{{productDetail.nationwide != 1}}">
+                <image src="{{'/images/product-ditu.jpg'}}" class="detail-nationwide-image" bindtap="aboutUs"/>
+            </view>-->
+            <view class="empty-view">
+            </view>
+        </view>
+    </scroll-view>
+    <view class="product-cart">
+        <view class="product-cart-button" bindtap="openCart">
+        	<view class="imageview">
+        		<view class="product-cart-button-imageview">
+        		    <image class="product-cart-button-image" src="/images/detail-add-cart.png" mode="aspectFit"/>
+                    <!-- <view class="product-cart-count {{isAddToCart==true?'product-cart-count-active':''}}" wx:if="{{productFromCartInfos[productDetail.sku] && productFromCartInfos[productDetail.sku].quantity}}">{{productFromCartInfos[productDetail.sku]==undefined?0:productFromCartInfos[productDetail.sku].quantity}}</view> -->
+                    <!-- 此处数量应为购物车商品总数 -->
+        		    <view class="product-cart-count {{isAddToCart==true?'product-cart-count-active':''}}" wx:if="{{cartCount}}">{{cartCount}}</view>
+        		</view>
+        		<!--<view class="product-cart-balance">¥{{productDetail.vip_price_pro.price_down.price/100.0}}</view>-->
+        	</view>
+        </view>
+        <view class="product-add-cart-button" data-product-detail-sku="{{productDetail.sku}}" data-product-title="{{productDetail.name}}" bindtap="addToCart" wx:if="{{productDetail.cart_image != ''}}">{{productDetail.cart_btn_name}}</view>
+        <view class="product-no-add-cart-button" data-product-detail-sku="{{productDetail.sku}}" wx:else>加入购物车</view>
+    </view>
+  </view>
+</view>

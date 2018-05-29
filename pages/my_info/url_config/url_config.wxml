@@ -1,0 +1,30 @@
+<view>
+    <view class="group-container">
+        <view class="group-title">AS接口</view>
+        <radio-group class="radio-group" bindchange="onAsHostUrlChecked">
+            <radio class="radio-item" wx:for="{{asHostUrlArray}}" checked="{{index == selectArray[0]}}" value="{{index}}">{{item}}</radio>
+        </radio-group>
+    </view>
+    <view class="group-container">
+        <view class="group-title">支付接口</view>
+        <radio-group class="radio-group" bindchange="onPayHostUrlChecked">
+            <radio class="radio-item" wx:for="{{payHostUrlArray}}" checked="{{index == selectArray[1]}}" value="{{index}}">{{item}}</radio>
+        </radio-group>
+    </view>
+    <view class="group-container">
+        <view class="group-title">MPS接口</view>
+        <radio-group class="radio-group" bindchange="onMpsHostUrlChecked">
+            <radio class="radio-item" wx:for="{{mpsHostUrl}}" checked="{{index == selectArray[2]}}" value="{{index}}">{{item}}</radio>
+        </radio-group>
+    </view>
+    <view class="group-container">
+        <view class="group-title">图片上传接口</view>
+        <radio-group class="radio-group" bindchange="onUploadHostUrlChecked">
+            <radio class="radio-item" wx:for="{{uploadHostUrl}}" checked="{{index == selectArray[3]}}" value="{{index}}">{{item}}</radio>
+        </radio-group>
+    </view>
+
+
+    <view bindtap="save" style="margin: 30px 25px;wxcs_style_margin: 60rpx 50rpx;background: #ff4891;text-align: center;color: white;padding: 20rpx;border-radius: 10rpx;">{{buttonName}}</view>
+
+</view>

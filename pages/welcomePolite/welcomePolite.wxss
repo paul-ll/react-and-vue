@@ -1,0 +1,559 @@
+/* pages/welcomePolite/welcomePolite.wxss */
+
+page {
+  background: #f5f5f5;
+   position: relative; 
+}
+.swiperView {
+  display: block;
+}
+
+.focus {
+  width: 100%;
+  display: block;
+}
+
+.welcomImg {
+  width: 100%;
+}
+
+.welcome {
+  display: flex;
+  width: 620rpx;
+  margin: 0 auto;
+  margin-top: 52rpx;
+  justify-content: space-between;
+}
+
+.num {
+  width: 36rpx;
+  height: 36rpx;
+  margin-top: 5rpx;
+}
+
+.welcomeText {
+  width: 580rpx;
+  text-align: center;
+  color: #474245;
+  font-size: 32rpx;
+}
+
+.coupons {
+  width: 420rpx;
+  height: 160rpx;
+  display: block;
+  margin: 0 auto;
+  margin-top: 30rpx;
+}
+
+.line1 {
+  background: #e6e6e6;
+  margin: 0 auto;
+  margin-top: 50rpx;
+  height: 1rpx;
+  width: 690rpx;
+}
+
+.welcomeFriend {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: #474245;
+  align-items: center;
+  height: 50rpx;
+}
+
+.haveInvateFriend, .noInvateFriend {
+  height: 166rpx;
+}
+
+.haveTitle {
+  text-align: center;
+  width: 400rpx;
+  margin: 0 auto;
+  margin-top: 26rpx;
+  color: #262626;
+  font-size: 32rpx;
+}
+
+.haveInvateNum {
+  margin-top: 36rpx;
+  width: 100%;
+  height: 50rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcomeFriendText {
+  font-size: 24rpx;
+  color: #969696;
+}
+
+.rightArrow {
+  width: 18.6rpx;
+  height: 18.6rpx;
+  margin-left: 10rpx;
+}
+
+.second {
+  position: relative;
+  background-color: white;
+  overflow: hidden;
+  margin-top: 20rpx;
+  /* z-index: -1; */
+}
+
+.rule {
+  position: absolute;
+  top: 25rpx;
+  right: 30rpx;
+  height: 45rpx;
+  width: 150rpx;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.ruleText {
+  font-size: 24rpx;
+  color: #969696;
+  margin-right: 12rpx;
+}
+
+.ruleImg {
+  height: 26rpx;
+  width: 26rpx;
+}
+
+.nofrend {
+  font-size: 28rpx;
+  color: #262626;
+  width: 454rpx;
+  margin: 0 auto;
+  margin-top: 74rpx;
+  text-align: center;
+}
+
+.invateConfig {
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: auto;
+}
+
+.configItem {
+  height: 240rpx;
+  width: 240rpx;
+  margin-left: 20rpx;
+  display: inline-block;
+  position: relative;
+}
+
+.configImg {
+  width: 240rpx;
+  height: 162rpx;
+}
+
+.configNum {
+  width: 240rpx;
+  text-align: center;
+  /* margin-top: 20rpx; */
+  font-size: 24rpx;
+  color: #262626;
+}
+
+.welcomeSuccess {
+  position: absolute;
+  right: 5rpx;
+  top: 110rpx;
+  width: 120rpx;
+  height: 32rpx;
+}
+
+.rank {
+  margin-top: 20rpx;
+  background-color: white;
+}
+
+.PKRanking {
+  width: 690rpx;
+  height: 88rpx;
+  margin: 0 auto;
+  display: flex;
+  /* border-top: 1rpx #e6e6e6 solid; */
+  border-bottom: 1rpx #e6e6e6 solid;
+}
+
+.PkItem {
+  width: 50%;
+  height: 100%;
+}
+
+.PkText {
+  width: 100%;
+  height: 84rpx;
+  line-height: 84rpx;
+  font-size: 28rpx;
+  color: #969696;
+  text-align: center;
+}
+
+.selectPk {
+  color: #ff4891;
+}
+
+.pkLine {
+  width: 122rpx;
+  height: 4rpx;
+  background: #ff4891;
+  margin: 0 auto;
+}
+
+.pkpolite {
+  background: #f5f5f5;
+  height: 60rpx;
+  line-height: 60rpx;
+  width: 100%;
+  font-size: 24rpx;
+  color: #969696;
+  text-align: center;
+}
+
+.countrylist, .friendlist {
+  width: 100%;
+}
+
+.listItem {
+  width: 690rpx;
+  height: 128rpx;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  border-bottom: 1rpx #e6e6e6 solid;
+  position: relative;
+}
+
+.rinkNum {
+  width: 28rpx;
+  height: 28rpx;
+  border-radius: 50%;
+  background-color: #e6e6e6;
+}
+
+.listLeft {
+  height: 100%;
+  width: 90rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+.listHeader {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50rpx;
+  margin: 0 auto;
+  margin-top: 20rpx;
+  display: block;
+}
+
+.rinkHeader {
+  position: absolute;
+  height: 32rpx;
+  width: 90rpx;
+  top: 72rpx;
+  left: 0;
+}
+
+.listContent {
+  margin-left: 20rpx;
+  height: 90rpx;
+  width: 300rpx;
+}
+
+.name {
+  font-size: 28rpx;
+  color: #262626;
+  height: 45rpx;
+  width: 300rpx;
+  line-height: 45rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.haveFriend {
+  font-size: 24rpx;
+  color: #969696;
+  width: 300rpx;
+  height: 45rpx;
+  line-height: 45rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.more {
+  margin: 0 auto;
+  height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.more view {
+  font-size: 24rpx;
+  color: #969696;
+}
+
+.immediatelyWelcomeBg {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 120rpx;
+  border-top: 1rpx #e6e6e6 solid;
+  width: 100%;
+  background-color: white;
+  /* z-index: -1; */
+}
+
+.immediatelyWelcome {
+  width: 690rpx;
+  height: 80rpx;
+  background: #ff4891;
+  border-radius: 4rpx;
+  text-align: center;
+  color: white;
+  font-size: 32rpx;
+  line-height: 80rpx;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}
+
+.instructions {
+  font-size: 24rpx;
+  color: #969696;
+  text-align: center;
+  height: 60rpx;
+  line-height: 60rpx;
+  background-color: #f8f8f8;
+}
+
+.listRight {
+  position: absolute;
+  top: 64rpx;
+  right: 0rpx;
+  height: 45rpx;
+  display: flex;
+  width: 250rpx;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.get {
+  font-size: 24rpx;
+  color: #969696;
+}
+
+.politeItem {
+  width: 81rpx;
+  height: 26rpx;
+  position: relative;
+  margin-left: 6rpx;
+}
+
+.politeItem>image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.politeText {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 20rpx;
+  color: #ff4891;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  line-height: 26rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.noData {
+  width: 100%;
+  height: 363rpx;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+.noData image {
+  display: block;
+  margin: 0 auto;
+  margin-top: 100rpx;
+  height: 138rpx;
+  width: 138rpx;
+}
+
+.noData view {
+  font-size: 28rpx;
+  color: #969696;
+  margin-top: 20rpx;
+  text-align: center;
+}
+
+button::after {
+  border: none;
+}
+
+
+/*弹框  */
+.mask-shadow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.red-packet-content {
+  width: 500rpx;
+  background: #fff;
+  z-index: 999;
+  border-radius: 8rpx;
+  position: absolute;
+  top: 550rpx;
+  left: 50%;
+  transition: 0.5s ease-in-out;
+  -webkit-transition: 0.5s ease-in-out;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+.bg {
+  width: 651rpx;
+}
+
+.red-packet-button-info {
+  position: absolute;
+  bottom: 156rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+}
+
+.red-packet-button {
+  display: inline-block;
+  width: 210rpx;
+  height: 208rpx;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  overflow: auto;
+}
+
+.red-packet-button::after {
+  content: none;
+}
+
+.red-packet-button-image {
+  position: absolute;
+  width: 210rpx;
+  height: 208rpx;
+  border-radius: 50%;
+  margin-left: -210rpx;
+  z-index: -1;
+}
+
+.click-part {
+  position: absolute;
+  bottom: 140rpx;
+  width: 366rpx;
+  height: 66rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+}
+
+.close1 {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+}
+
+.close1 image {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.close2 {
+  position: absolute;
+  top: 20rpx;
+  right: 40rpx;
+}
+
+.close2 image {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.welcome_friend {
+  font-size: 32rpx;
+  color: #262626;
+  margin-top: 50rpx;
+  text-align: center;
+}
+
+.welcome_friend_img {
+  /* display: flex;
+  justify-content: center; */
+  margin-top: 42rpx;
+    width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: auto;
+}
+
+.welcome_friend_icon {
+  width: 62rpx;
+  height: 62rpx;
+  margin: 0 4rpx;
+  display: inline-block;
+}
+
+.welcome_friend_list {
+  margin-top: 40rpx;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.welcome_friend_text {
+  font-size: 22rpx;
+  line-height: 36rpx;
+  margin-bottom: 14rpx;
+}
+
+.welcome_friend_btn {
+  width: 100%;
+  height: 80rpx;
+  text-align: center;
+  background: #ff4890;
+  font-size: 32rpx;
+  line-height: 80rpx;
+  color: #fff;
+}
+
+.hiddenView{
+  display: none;
+}
+
+@import "/utils/templates/no_data/no_data.wxss";

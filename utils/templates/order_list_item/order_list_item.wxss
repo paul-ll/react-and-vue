@@ -1,0 +1,7 @@
+.inactive {
+    opacity: 0.3;
+}
+
+.price-text-decoration {
+    text-decoration: line-through;
+}

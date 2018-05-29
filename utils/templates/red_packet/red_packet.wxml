@@ -1,0 +1,29 @@
+<template name="redPacket">
+    <view class="mask-shadow" bindtap="closeRedPacket"></view>
+    <block wx:if="{{!resultImg}}">
+        <view class="red-packet-content init {{bigger}} {{smaller}}">
+            <image class="bg" src="{{showPageBgImg}}" mode="widthFix"></image>
+            <!--<view class="red-packet-btn" bindtap="getRedPacket">
+                <image wx:if="{{!changeBtn}}" src="{{showPageBtnImg}}"></image>
+                <image wx:if="{{changeBtn}}" src="{{showPageLoadingImg}}"></image>
+            </view>-->
+            <form class="red-packet-button-info" bindsubmit="getRedPacket" report-submit="true">
+                <button class="red-packet-button" formType="submit"></button>
+                <image class="red-packet-button-image" wx:if="{{changeBtn}}" src="{{showPageLoadingImg}}"></image>
+                <image class="red-packet-button-image" wx:if="{{!changeBtn}}" src="{{showPageBtnImg}}"></image>
+            </form>
+            <view class="close1" bindtap="closeRedPacket">
+                <image src="/images/red-packet-close-1.png"></image>                
+            </view>
+        </view>
+    </block>
+    <block wx:if="{{resultImg}}">
+        <view class="red-packet-content bigger {{smaller}}">
+            <image class="bg" src="{{resultImg}}" mode="widthFix"></image>
+            <view class="close2" bindtap="closeRedPacket">
+                <image src="/images/red-packet-close-2.png"></image>
+            </view>
+            <view class="click-part" bindtap="goToBuy"></view>
+        </view>
+    </block>
+</template>

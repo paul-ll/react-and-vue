@@ -1,0 +1,95 @@
+<import src="/utils/templates/no_network/no_network.wxml" />
+<import src="/utils/templates/loading/loading.wxml" />
+<import src="/utils/templates/no_data/no_data.wxml" />
+<import src="/utils/templates/wetoast/wetoast.wxml" />
+
+
+<template is="network" data="{{...network}}" />
+<template is="noData" data="{{...nodata}}" />
+<template is="loading" wx:if='{{loading}}' />
+<template is="wetoast" data="{{...__wetoast__}}" />
+
+
+<view wx:if='{{haveData}}'>
+  <loading hidden="{{loadingHidden}}">加载中...</loading>
+  <view class='goodsDetail'>
+    <view class='goodsImg'>
+      <image src='{{result.image}}'></image>
+    </view>
+    <view class='rightInfo'>
+      <view class='goodsName'>{{result.name}}</view>
+      <view class='numAndPrice'>
+        <view class='num'>数量:{{result.quantity}}</view>
+        <view class='detailPrice'>￥{{result.raw_price/100.0}}</view>
+      </view>
+    </view>
+  </view>
+  <view style='background: white'>
+    <view class='payPrice payMargin'>
+      <view class='alert'>实际支付金额</view>
+      <view class='price'>￥{{result.payments/100.0}}</view>
+    </view>
+    <view class='payPrice'>
+      <view class='alert'>实际退款金额</view>
+      <view class='priceAndExplain' bindtap='showBounced'>
+        <view class='price'>￥{{refundPrice}}</view>
+        <view class='explay'>
+          <image src='/images/interrogation.png'></image>
+        </view>
+      </view>
+    </view>
+    <view class='payPrice'>
+      <view class='alert'>问题类型</view>
+      <view class='problem'>
+        <view class='problemItem {{problem=="one"?"selectItem":""}}' bindtap='oneAction'>{{problemTitleOne}}</view>
+        <view class='problemItem {{problem=="two"?"selectItem":""}}' bindtap='twoAction'>{{problemTitleTwo}}</view>
+      </view>
+    </view>
+    <view class='payPrice noLine'>
+      <view class='alertleft'>
+        <view class='alertOne'>商品问题比例</view>
+        <view class='alertSub'>请按照实际情况来酌情选择问题商品比例</view>
+      </view>
+      <view class='problem'>
+        <view class='problemItem {{proportion=="little"?"selectItem":""}}' bindtap='thirtyAction'>30%</view>
+        <view class='problemItem {{proportion=="half"?"selectItem":""}}' bindtap='fiftyAction'>50%</view>
+        <view class='problemItem {{proportion=="all"?"selectItem":""}}' bindtap='hundredAction'>100%</view>
+      </view>
+    </view>
+  </view>
+  <view class='detail'>
+    <textarea class='detailText {{showBounce?"lucencyColor":""}}' placeholder='请描述您的详细问题' placeholder-class='placeClass {{showBounce?"lucencyColor":""}}' bindinput='inputAction' value='{{inputValue}}'>
+      <view class='count'>{{count}}/100</view>
+    </textarea>
+    <view class='label'>
+      <view wx:for='{{labelArr}}' wx:key='item' data-item='{{item}}' class='labelItem {{item.select=="true"?"selectItem":""}}' bindtap='labelAction'>{{item.content}}</view>
+    </view>
+    <view class='addImg'>
+      <image class='imgItem' wx:for='{{refundImgArr}}' wx:key='item' wx:for-index="idx" src='{{item}}'>
+        <image class='closeImg' src='/images/close.png' data-index='{{idx}}' bindtap='closeAction'></image>
+      </image>
+      <image class='imgItem' src='/images/refund-add.png' bindtap='addAction' hidden='{{refundImgArr.length>=5}}'></image>
+    </view>
+    <view class='prompt'>请上传商品包装袋上的快递单图片及所有问题商品的图片。单张图片大小不超过5M，最多上传5张</view>
+  </view>
+  <view style='height:108rpx'></view>
+  <view class='sureBg'>
+    <view class='sure' bindtap='sureAction'>提交</view>
+  </view>
+
+
+  <!--弹框  -->
+  <view class='bounced' bindtap='closeBounced' hidden='{{!showBounce}}'>
+    <view class='close'>
+      <image src='/images/red-close.png'></image>
+    </view>
+    <view class='bouncedContent' catchtap='bounced'>
+      <image src='{{imageHost}}/img_20180319112524788.png'></image>
+      <view class='bouncedTitle'>{{result.refund_format.refund_label}}</view>
+      <view class='boundeOne'>{{result.refund_format.price_label.name}}</view>
+      <view class='boundeTwo'>{{result.refund_format.price_label.msg}}</view>
+      <view class='boundeOne' style='margin-top: 27rpx;'>{{result.refund_format.broken_label.name}}</view>
+      <view class='boundeTwo'>{{result.refund_format.broken_label.msg}}</view>
+    </view>
+  </view>
+</view>

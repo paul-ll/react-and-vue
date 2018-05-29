@@ -1,0 +1,73 @@
+
+<wxs module="deciToHex">
+  // 十进制颜色 ==> 十六进制
+  function deciToHex(color, defaultColor) {
+    // 指定个非法的值不生效
+    console.log(color)
+    if (color && color[0] === '#') {
+      return color
+    }
+    var c = defaultColor || ''
+    color = parseInt(color)
+    if (color === undefined || color > 16777215 || color < 0 || color === null) {
+      return c
+    }
+    c = color.toString(16)
+    c = leftZeroPad(c, 6)
+    c = '#' + c
+    return c
+  }
+  // 左填充
+  function leftZeroPad(val, minLength) {
+    var MANY_ZEROS = '000000000000000000'
+    if (typeof(val) !== 'string') {
+      val = String(val)
+    }
+    return (MANY_ZEROS.substring(0, minLength - val.length)) + val
+  }
+  module.exports = deciToHex
+</wxs>
+
+<template name="display-list">
+  <view class="display-list-container">
+    <block wx:for="{{displayList}}" wx:for-item="displayItem" >
+      <!-- title总价部分 -->
+      <view class="display-item-wrapper {{displayItem.tip ? 'total-price' : ''}}" wx:if="{{displayItem.type == 'totalPrice'}}">
+        <view class="total-price-right">
+          <view class="total-price" style="color: {{deciToHex(displayItem.amount_color)}}">{{displayItem.amount_text}}</view>
+          <view class="total-price-tips">{{displayItem.tip}}</view>
+        </view>
+        <view class="display-item-title">{{displayItem.title}}</view>
+        <view class="clear" style="border-bottom:1rpx solid #e5e5e5;" wx:if="{{displayItem.with_line===1}}"></view>
+      </view>
+      <!-- 促销展示区域 -->
+      <block wx:elif="{{displayItem.type == 'promotion'}}">
+
+        <view class="display-item-wrapper {{isShowDisplayDetail ? 'show-promotion' : ''}}" bindtap="{{flodUp}}">
+          <view class="promotion-wrapper">
+            <image class="right-arrow-btn pull-down-btn" mode="aspectFit" src="/images/youjt.png"></image>
+            <view class="display-item-amount{{displayItem.is_positive == 0 ? '-is-positive' : ''}}" style="color: {{deciToHex(displayItem.amount_color)}}">{{displayItem.amount_text}}</view>
+            <image class="display-icon" wx:if="{{displayItem.icon}}" src="{{displayItem.icon}}"></image>
+            <view class="display-item-title">{{displayItem.title}}</view>
+          </view>          
+          <view class="promotion-area" wx:if="{{isShowDisplayDetail}}">
+            <view class="promotion-item" wx:for="{{displayItem.subPromotion}}" wx:for-item="subPromotionItem">
+              <view class="display-item-amount{{subPromotionItem.is_positive == 0 ? '-is-positive' : ''}}" style="color: {{deciToHex(displayItem.amount_color)}}">{{subPromotionItem.amount_text}}</view>
+              <view class="display-item-title">{{subPromotionItem.title}}</view>
+              <view style="border-bottom:1rpx solid #e5e5e5;" wx:if="{{subPromotionItem.with_line===1}}"></view>
+            </view>
+          </view>
+          <view style="border-bottom:1rpx solid #e5e5e5;" wx:if="{{displayItem.with_line===1}}"></view>            
+        </view>
+      </block>
+      <!-- 其他类型展示 -->
+      <view class="display-item-wrapper" wx:else wx:key="{{index}}" bindtap="{{clickDisplay}}" data-query-type="{{displayItem.query_type}}">
+        <image wx:if="{{displayItem.can_select == 1}}" class="right-arrow-btn" mode="aspectFit" src="/images/youjt.png"></image>
+        <view class="display-item-amount{{displayItem.is_positive == 0 ? '-is-positive' : ''}}" style="color: {{deciToHex(displayItem.amount_color)}}">{{displayItem.amount_text}}</view>
+        <image class="display-icon" wx:if="{{displayItem.icon}}" src="{{displayItem.icon}}"></image>
+        <view class="display-item-title">{{displayItem.title}}</view>
+        <view style="border-bottom:1rpx solid #e5e5e5;" wx:if="{{displayItem.with_line===1}}"></view>
+      </view>
+    </block>
+  </view>
+</template>

@@ -1,0 +1,35 @@
+<template name="product-voucher-item">
+  <view class="product-voucher-container {{status != 0 ? 'inactive-block' : ''}}" data-voucher-type="{{voucher_type}}" data-status="{{status}}" data-product-sku="{{product_sku}}" data-voucher-id="{{user_voucher_id}}" catchtap="changeVoucher">
+    <image class="product-voucher-bg" src="/images/{{status == 1 || status == 2 ? 'new-coupon-bg-gray' : 'new-coupon-big-bg-yellow'}}.png"></image>
+    <view class="product-voucher-name">
+      <text class="product-voucher-name-text">{{vocher_type_name}}</text>
+    </view>
+    <view class="product-voucher-main">
+      <view class="image-wrapper">
+        <image class="porduct-voucher-img" src="{{img}}" mode="widthFix"></image>
+        <text class="voucher-tag" wx:if="{{product_voucher_tag}}">{{product_voucher_tag}}</text>
+      </view>
+      <view class="product-voucher-content">
+        <view class="product-voucher-title {{status == 1 || status == 2 ? 'inactive' : ''}}">{{voucher_name}}</view>
+        <view class="product-voucher-desc">{{voucher_description}}</view>
+        <view class="product-voucher-end-time" wx:if="{{end_time}}">有效期至:{{end_time}}({{weeks}})</view>
+      </view>
+    </view>
+    <!-- 即将过期tag -->
+    <view class="is-going-inactive" wx:if="{{status != 1 && status != 2}}">{{tag}}</view>
+    <!-- 已过期 -->
+    <view class="inactive-tag-wrapper">
+      <image class="inactive-tag" src="/images/coupon-used-tag.png" wx:if="{{status == 1}}"></image>
+      <image class="inactive-tag" src="/images/coupon-invalid-tag.png" wx:if="{{status == 2}}"></image>
+    </view>
+    <view class="go-to-product-detail" wx:if="{{fromMyInfo}}" catchtap="goToProductDetail" data-product-sku="{{product_sku}}">查看此商品></view>
+    <view class="inactive-card-tip" wx:if="{{status == 3}}">
+      <image class="inactive-img" src="/images/exclamatory.png" mode="widthFix"></image>
+      <text class="inactive-text">未达到使用门槛</text>
+    </view>
+    <block wx:if="{{!fromMyInfo && status == 0}}">
+      <image class="select-icon" mode="aspectFit" src="/images/all-select.png" wx:if="{{currentCouponIds[1] == user_voucher_id}}"></image>
+      <text class="select-icon" wx:elif="{{currentCouponIds[1] != user_voucher_id}}"></text>
+    </block>
+  </view>
+</template>

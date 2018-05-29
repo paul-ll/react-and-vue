@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "瓜分百万现金",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "user_no_rule": "/utils/components/user_no_rule/user_no_rule"
+  }
+}

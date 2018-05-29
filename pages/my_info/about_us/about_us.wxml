@@ -1,0 +1,4 @@
+<!--about_us.wxml-->
+<view class="container">
+    <text class="user-motto">{{test}}111{{test}}</text>
+</view>

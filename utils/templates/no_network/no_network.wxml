@@ -1,0 +1,14 @@
+<template name='network'>
+	<block wx:if="{{noNetwork == true}}">
+	    <view class="no-network">
+	        <view class="network-container">
+	            <image class="wifi-icon" src='/images/no_net.png'></image>
+	            <view class="tip-text">您的网络好像不太给力呀～</view>
+	            <view class="refresh-net" bindtap="reconnect">重新加载</view>
+	        </view>
+	        <view class="network-reconnect" wx:if='{{reconnecting == true}}'>
+	            <image class="loadingimg" src='/images/loading-gif-vip.gif' mode='aspectFit'></image>
+	        </view>
+	    </view>
+	</block>
+</template>

@@ -1,0 +1,35 @@
+.bgColor {
+  background-color: white;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.img {
+  display: block;
+  margin: 0 auto;
+  width: 180rpx;
+  margin-top: 350rpx;
+}
+
+.noDataText {
+  font-size: 14px;
+  color: #969696;
+  text-align: center;
+  margin-top: 10rpx;
+}
+
+.reconnect {
+  height: 72rpx;
+  width: 200rpx;
+  margin: 0 auto;
+  background: #ff4891;
+  border-radius: 8rpx;
+  color: white;
+  font-size: 28rpx;
+  text-align: center;
+  line-height: 72rpx;
+  margin-top: 90rpx;
+}

@@ -1,0 +1,2 @@
+<!--pages/active_page/group_scan.wxml-->
+<image class="scan-img" src="{{scanImg}}" mode="widthFix"></image>

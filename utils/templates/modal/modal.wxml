@@ -1,0 +1,12 @@
+<template name="comp-modal">
+  <view class="comp-modal-container" wx:if="{{isShowModal}}">
+    <view class="modal-main">
+      <view class="modal-header" wx:if="{{title}}">{{title}}</view>
+      <view class="modal-body" wx:if="{{content}}">{{content}}</view>
+      <view class="modal-footer {{leftBtnText && rightBtnText ? 'two-btn' : ''}}">
+        <view class="modal-left-btn" wx:if="{{leftBtnText}}" bindtap="cancel">{{leftBtnText}}</view>
+        <view class="modal-right-btn" wx:if="{{rightBtnText}}" bindtap="confirm">{{rightBtnText}}</view>
+      </view>
+    </view>
+  </view>
+</template>

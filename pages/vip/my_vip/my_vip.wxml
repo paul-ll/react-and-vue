@@ -1,0 +1,226 @@
+<!--vip.wxml-->
+<import src="/utils/templates/wetoast/wetoast.wxml" />
+<template is="wetoast" data="{{...__wetoast__}}" />
+<import src="/utils/templates/loading/loading.wxml" />
+<template is="loading" wx:if='{{loading}}' />
+<import src="/utils/templates/no_data/no_data.wxml" />
+<template is="noData" data="{{...nodata}}" />
+<import src="/utils/templates/no_network/no_network.wxml" />
+<template is="network" data="{{...network}}" />
+<!-- 小神推事件抓取组件 -->
+<import src="../../template/template.wxml" />
+<template wx:if="{{!is_showHideBtn}}" is='hideBtn' data="{{hideBtnData}}"></template>
+<import src="/utils/templates/product_item/product_item.wxml" />
+<!-- 用户拒绝授权 -->
+<user_no_rule bind:haveRule="haveRule" bind:noRule="noRule" wx:if='{{showNoAddressRules}}'></user_no_rule>
+<view class="container" wx:if="{{haveData}}">
+    <scroll-view scroll-y="true" style="height: 100vh;" bindscroll="bindScroll" scroll-into-view="{{toView}}">
+        <!-- 乡下滚动出现 -->
+        <view wx:if="{{user_type<=0}}" class="fixed-tips {{tipShow?'tips-show':'tips-hide'}}">
+            <image class="fixed-tips-img" src="/images/vip_bg_bottom.png" mode="{{}}"></image>
+            <view class="fixed-tips-main">
+                <view class="fixed-tips-left">
+                    开通优享会员预计一年为您节省1121元
+                </view>
+                <view class="fixed-tips-right" bindtap="openVipCard">
+                        立即开通
+                 </view>
+            </view>
+        </view>
+        <!-- 红包领取 -->
+        <view class="dialog-container" wx:if="{{isShowGroup}}">
+            <view class="black-mask" catchtap="closeBtnGroup"></view>
+            <view class="dialog-body dialog-body-group">
+                <view class="dialog-group-title">
+                    温馨提示
+                </view>
+                <view class="dialog-group-text">
+                    该红包仅限会员领取，快去 开通会员吧
+                </view>
+                <view class="dialog-group-flex">
+                    <view class="dialog-group-left" catchtap="closeBtnGroup">
+                        取消
+                    </view>
+                    <view class="dialog-group-right" bindtap="openVipCard">
+                        立即开卡
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 红包领取 end -->
+
+        <!-- 立即体验 -->
+        <view class="dialog-container" wx:if="{{isShowDialog}}">
+            <view class="black-mask" catchtap="closeBtnClick"></view>
+            <view class="dialog-body dialog-body-vip">
+                <image class="open-img" src="{{openVipButton.backgroundImage}}" mode="{{}}"></image>
+                <image class="close-dialog-btn" src="/images/logout.png" mode="widthFix" catchtap="closeBtnClick"></image>
+                <view bindtap="vipExperience" class="open-vip-button">
+                    立即体验
+                </view>
+            </view>
+        </view>
+
+        <!-- 立即体验 end -->
+        <!-- 计算器弹窗 -->
+        <view class="dialog-container" wx:if="{{coverView}}">
+            <view class="black-mask" catchtap="cancelPayBox" formType="submit"></view>
+            <view class="dialog-body dialog-body-bg">
+                <view class="activity_rule">
+                    <image class="calc-img" src="/images/calc.png" mode="{{}}"></image>
+                    <view class="calc-title">
+                        {{total_save_text}}
+                    </view>
+                    <view class="calc-text">
+                        {{total_save_name}}
+                    </view>
+                    <view class="calc-money">
+                        <!-- <view class="calc-money-left" style='color:{{saveMoneycolor}}'>
+                        ¥
+                   </view>   -->
+                        <view class="calc-money-right" style='color:{{saveMoneycolor}}'>
+                            {{total_save_money_text.value}}
+                        </view>
+                    </view>
+                    <view class="calc-list">
+                        <view class="calc-list-flex" wx:for="{{save_money_list}}" wx:for-item="saveMoney" wx:key="*this">
+                            <view class="calc-list-left">
+                                <view class="calc-list-title">
+                                    {{saveMoney.name}}
+                                </view>
+                                <view class="calc-list-info">
+                                    {{saveMoney.text}}
+                                </view>
+                            </view>
+                            <view class="calc-list-right">
+                                {{saveMoney.money_text.value}}
+                            </view>
+                        </view>
+                    </view>
+                    <view bindtap="openVipCard" class="calc-open">
+                        <!-- 开通优享会员 -->
+                        {{openVipButton.name}}
+                    </view>
+                </view>
+                <image class="close-dialog-btn" src="{{closeBtnImg || '/images/logout.png'}}" mode="widthFix" catchtap="cancelPayBox"></image>
+            </view>
+        </view>
+        <!--计算器 end- -->
+        <view class="vip-top" wx:if="{{userLogin}}">
+            <view class="vip-top-main">
+                <view class="vip-top-bg">
+                    <view class="vip-top-user">
+                        <view class="vip-top-img">
+                            <image class="vip-top-header" src="{{vipCardInfo.portrait}}" mode="{{}}"></image>
+                            <image wx:if="{{user_type != 0}}" class="vip-gold-img" src="/images/gold_vip.png" mode="{{}}"></image>
+                        </view>
+                        <view class="vip-top-info">
+                            <view class="vip-top-name">
+                                {{vipCardInfo.nickName}}
+                            </view>
+                            <view class="vip-top-text" wx:if="{{end_time_text}}">
+                                <view class="vip-top-time">
+                                    {{end_time_text}}
+                                </view>
+                                <!-- <view class="vip-top-title">
+                                会员到期
+                            </view> -->
+                            </view>
+
+                        </view>
+                       
+                   
+                        <view class="vip-top-button {{end_time_text?'marginTop':''}}" wx:if="{{newVipCardButton}}">
+                            <image class="vip-top-kai" src="/images/button_up.png" mode="{{}}"></image>
+                            <view class="vip-top-right" bindtap="openVipCard" data-type='vipbutton' data-value="{{newVipCardButton}}" >
+                                {{newVipCardButton}}
+                            </view>
+                        </view>
+                    </view>
+                    <!-- 非会员，已经体验过 -->
+                    <view wx:if="{{user_type == 0}}">
+                        <image class="no_black_image" src="/images/no_black_bg.png" mode="{{}}"></image>
+                    </view>
+                    <!-- 非会员，未体验过 -->
+                    <view wx:if="{{user_type == 0 && vipCardInfo.freeTrialButton }}">
+                        <image class="no_black_image" src="/images/no_money_life.png" mode="{{}}"></image>
+                    </view>
+                    <!-- 会员，已经体验过 -->
+                    <view wx:if="{{user_type == 2}}">
+                        <image class="no_black_image" src="/images/no_black_bg.png" mode="{{}}"></image>
+                    </view>
+                    <!-- 会员,可以邀请 -->
+                    <view wx:if="{{user_type == 3 || user_type == 1}}">
+                        <image class="no_black_image" src="/images/ask_frieng_bg.png" mode="{{}}"></image>
+                    </view>
+                    <view wx:if="{{user_type == 3 || user_type == 1}}" bindtap="askFriend" class="click_button_right">
+
+                    </view>
+                    <view wx:if="{{user_type == 0 && vipCardInfo.freeTrialButton }}" bindtap="vipLife" class="click_button_right">
+
+                    </view>
+                </view>
+
+            </view>
+            <view class="vip-top-float" bindtap="openCalc">
+                <view class="vip-float-text">
+                    {{total_save_name}}
+                    <view class="vip-float-red">
+                        {{total_save_money_text.money}}
+                    </view>
+                    元
+                </view>
+                <image class="vip-float-img" src="/images/small_float.png" mode="{{}}"></image>
+            </view>
+
+        </view>
+        <view class="vip-top" wx:if="{{!userLogin}}">
+            <view class="vip_margin"></view>
+            <button class="vip_load" type="warn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">登录</button>
+            <!-- <view bindtap="vipLogin" class="vip_load">登陆</view> -->
+        </view>
+        <!-- tab -->
+        <view class="vip-tab-flex">
+            <view class="vip-tab-index" bindtap="tapIcon" wx:for="{{vip_rights_icon}}" wx:for-item="tab" wx:for-index="index" data-value="{{tab.name}}" data-id="{{tab.id}}" data-index="{{index}}"
+                wx:key="name">
+                <image class="vip-tab-img" src="{{tab.suspensionIcon}}" mode="{{}}"></image>
+                <view class="vip-tab-text">{{tab.primaryName}}</view>
+            </view>
+        </view>
+        <!-- swiper -->
+        <swiper wx:if="{{banners && banners.length}}" indicator-dots="{{bannerIndicatorDots}}" current="{{initBannerIndex}}" autoplay="{{bannerAutoplay}}" interval="5000" duration="700" class='banners-swiper' indicator-active-color="#969696" style="height: {{bannerHeight}}px" bindchange="bannerChange">
+            <block wx:for-index="bannerIndex" wx:for="{{banners}}" wx:for-item="banner" wx:key="{{banner.path}}">
+              <swiper-item wx:if="{{banner.wxapp_show===1}}" catchtap="clickBanner" data-banner-index="{{bannerIndex}}" data-banner-level="1" data-promotion-id="{{banner.promotion_id}}" data-name="{{banner.name}}" data-banner-entity="{{banner}}">
+                <image src="{{banner.path}}" class="banners-image" mode="widthFix" />
+              </swiper-item>
+            </block>
+            <view class="pagination">{{bannerIndex || 1}}/{{banners.length}}</view>
+        </swiper>
+        <!-- group -->
+        <view class="vip-group" wx:if="{{vipRedPacketInfo && ((vipRedPacketInfo.imageList && vipRedPacketInfo.imageList.length) || (vipRedPacketInfo.imageNoOpenList && vipRedPacketInfo.imageNoOpenList.length))}}">
+            <block wx:if="{{user_type != 0}}">
+                <view class="vip-group-item" wx:for="{{vipRedPacketInfo.imageList}}" wx:for-item="vipRed" wx:key="*this" bindtap="{{user_type==0?'noVip':'tonavigateToPackets'}}" data-index="{{index}}">
+                    <image class="vip-group-image" src="{{vipRed}}" mode="{{}}"></image>
+                </view>
+            </block>
+            <block wx:if="{{user_type == 0}}">
+                <view class="vip-group-item" wx:for="{{vipRedPacketInfo.imageNoOpenList}}" wx:for-item="vipRed" wx:key="*this" bindtap="{{user_type==0?'noVip':'tonavigateToPackets'}}" data-index="{{index}}">
+                    <image class="vip-group-image " src="{{vipRed}}" mode="{{}}"></image>
+                </view>
+            </block>
+
+        </view>
+
+        <!-- 货架 -->
+        <view class="vip-list-title" id="vip" wx:if="{{title_name}}">
+            {{title_name}}
+        </view>
+
+        <block wx:if="{{products && products.length>0}}" wx:for="{{products}}" wx:for-item="product" wx:for-index="productIndex" wx:key="{{product.sku}}">
+            <template is="product-item" data="{{product, productIndex, clickBanner, productFromCartInfos: cartInfo.productFromCartInfos, subscribeArrivalRemind, chooseProduct, promotionTagWidth: promotionTags[productIndex].width, priceTagUrl: miniStartInfo && miniStartInfo.priceTag, priceTagWidth, getPriceTagWidth}}"/>
+        </block>
+
+        <view wx:if="{{products.length>0}}" class="blank-view">没有更多商品啦</view>
+    </scroll-view>
+</view>

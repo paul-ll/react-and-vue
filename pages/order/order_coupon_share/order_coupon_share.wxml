@@ -1,0 +1,14 @@
+<!-- 小神推事件抓取组件 -->
+<import src="../../template/template.wxml" />
+<template wx:if="{{!is_showHideBtn}}" is='hideBtn'data="{{hideBtnData}}"></template>
+<!--pages/order/order_coupon_share/order_coupon_share.wxml-->
+<view class="container">
+  <image class="order-redpacket-bg" src="{{imageHost}}/img_20180319111946299.png" mode="widthFix"></image>
+  <image class="share-order-redpacket-bg" src="/images/share-order-redpacket-20.png" mode="aspectFill"></image>
+  <button class="share-order-redpacket-button" plain="true" open-type="share" disabled="{{isShareDisabled}}">
+    <view class="share-order-redpacket">
+        <view class="share-order-redpacket-text">点击任性发红包</view>
+        <image class="share-order-redpacket-triangle" src="/images/triangle.png" mode="aspectFill"></image>
+    </view>
+  </button>
+</view>

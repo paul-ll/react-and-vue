@@ -1,0 +1,163 @@
+.container {
+  padding-bottom: 98rpx;
+  font-family: PingFangSC-Regular;
+}
+.knife-tip {
+  height: 66rpx;
+  line-height: 66rpx;
+  background: #FFF7E3;
+  font-size: 24rpx;
+  color: #96483A;
+  padding-left: 28rpx;
+}
+
+.banners-swiper-container {
+  position: relative;
+  height: 354rpx;
+}
+.pagination {
+  position: absolute;
+  bottom: 15rpx;
+  right: 20rpx;
+  background: rgba(0, 0, 0, .3);
+  line-height: 1;
+  padding: 8rpx 15rpx;
+  border-radius: 24rpx;
+  color: #fff;
+  font-size: 24rpx;
+}
+
+.banners-swiper {
+  height: 100%;
+}
+.bargain-banner {
+  width: 100%;
+  height: 100%;
+}
+
+.notification-container {
+  position: relative;
+}
+
+.notification-container .mask-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 88rpx;
+  width: 100%;
+  z-index: 5;
+  background: rgb(0,0,0,0);
+}
+
+/*消息滚动样式*/
+.swiper-container {
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  padding: 26rpx 0rpx;
+  box-sizing: border-box;
+  height: 88rpx;
+  border-bottom: 2rpx solid #E6E6E6;
+  position: relative;
+  z-index: 3;
+}
+.swiper-container .swiper-item {
+  font-size: 24rpx;
+  color: #4D4D4D;
+  text-align: left;
+  position: relative;
+  height: 36rpx;
+}
+
+.avatar-icon {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+}
+
+.notification-text {
+  position: absolute;
+  left: 52rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 36rpx;
+  width:654rpx;
+}
+
+.nav-tab {
+  width: 100%;
+  height: 98rpx;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  z-index: 100;
+  background: #FFFFFF;
+  box-shadow: inset 0 0 0 0 #E6E6E6;
+}
+.nav-tab-item {
+  height: 98rpx;
+  line-height: 98rpx;
+  text-align: center;
+  width: 50%; 
+  font-size: 32rpx;
+  color: #FD3149;
+  border-top: 2rpx solid #E6E6E6;
+}
+.nav-tab-item.active {
+  color: white;
+  background: #FD3149;
+  border-top: none;
+}
+
+.goods-list-container {
+  position: relative;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/*加载更多*/
+.no-more-data {
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  color: #969696;
+  background: #fff;
+  font-size: 32rpx;
+}
+.load-more-goods {
+  white-space: nowrap;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 28rpx;
+  color: #999;
+  text-align: center;
+  background: #fff;
+}
+.load-more-gif {
+  display: inline-block;
+  vertical-align: middle;
+  width: 44rpx;
+  height: 44rpx;
+  animation: loading 800ms forwards infinite linear;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotateZ(0);
+    -webkit-transform: rotateZ(0);
+  }
+  50% {
+    transform: rotateZ(180deg);
+    -webkit-transform: rotateZ(180deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+    -webkit-transform: rotateZ(360deg);
+  }
+}
+@import "/utils/templates/no_data/no_data.wxss";

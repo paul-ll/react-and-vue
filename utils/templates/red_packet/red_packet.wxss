@@ -1,0 +1,101 @@
+.mask-shadow{
+  position:fixed;
+  left:0;
+  top:0;
+  height:100%;
+  width:100%;
+  background:rgba(0,0,0,0.6);
+
+}
+.red-packet-content{
+  z-index: 999;
+  position :absolute;
+  top: 50%;
+  left: 50%;
+  transition: 0.5s ease-in-out;
+  -webkit-transition: 0.5s ease-in-out;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+
+.init {
+  transform: translate(-50%, -50%) scale(0, 0);
+  -webkit-transform: translate(-50%, -50%) scale(0, 0);
+}
+
+.bigger {
+  transform: translate(-50%, -50%) scale(1, 1);
+  -webkit-transform: translate(-50%, -50%) scale(1, 1);
+}
+
+.smaller {
+  transform: translate(-50%, -50%) scale(0, 0);
+  -webkit-transform: translate(-50%, -50%) scale(0, 0);
+}
+
+.bg {
+  width: 651rpx;
+}
+
+.red-packet-button-info {
+  position: absolute;
+  bottom: 156rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+}
+
+.red-packet-button {
+    display: inline-block;
+    width: 210rpx;
+    height: 208rpx;
+    border-radius:50%;
+    background-color:transparent;
+    border: none;
+    overflow: auto;
+}
+
+.red-packet-button::after {
+    content: none;
+}
+
+.red-packet-button-image {
+    position: absolute;
+    width: 210rpx;
+    height: 208rpx;
+    border-radius:50%;
+    margin-left: -210rpx;
+    z-index: -1;
+}
+
+.click-part {
+  position: absolute;
+  bottom: 140rpx;
+  width: 366rpx;
+  height: 66rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+}
+
+.close1 {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+}
+
+.close1 image {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.close2 {
+  position: absolute;
+  top: 20rpx;
+  right: 40rpx;
+}
+
+.close2 image {
+  width: 44rpx;
+  height: 44rpx;
+}

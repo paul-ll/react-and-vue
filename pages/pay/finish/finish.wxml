@@ -1,0 +1,26 @@
+<!--finish.wxml-->
+<import src="/utils/templates/red_packet/red_packet.wxml"/>
+<import src="/utils/templates/count_time_canvas/count_time_canvas.wxml"/>
+<import src="/utils/templates/no_network/no_network.wxml"/>
+<template is="network" data="{{...network}}"/>
+<view class="container">
+   <!--  <view class="pay-success-icon">
+        <image src="/images/pay-success.png"></image>
+    </view> -->
+    <view wx:if='{{isLoad == true}}'>
+	    <template is="countdown" wx:if="{{riskStatus!='HAS_RISKS'}}" data="{{orderChromeInfo, overTimeList, hideDiscountCard, orderNo,hidenCancel}}"/>
+      <view wx:if="{{riskStatus =='HAS_RISKS'}}">
+          <image src="https://j-image.missfresh.cn/img_20180510173131467.png" class="risk"></image>
+          <view class="riskText">{{tip}}</view>
+      </view>
+      <view class="hr" wx:if="{{riskStatus!='HAS_RISKS'}}" ></view>
+	    <view class="buttons">
+	        <view class="left btn" bindtap="goIndex">返回首页</view>
+	        <view class="right btn" bindtap="checkOrder">查看订单</view>
+	    </view>
+    </view>
+    <view wx:else>
+   		<image src="/images/loading-gif-vip.gif" class="finish-loading"></image>
+  	</view>
+</view>
+<template wx:if="{{isShowPop == 1}}" is="redPacket" data="{{...redPacket}}"/>

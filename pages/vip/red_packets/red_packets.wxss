@@ -1,0 +1,156 @@
+.packetItem{
+	width:680rpx;
+	height:290rpx;
+	margin:0 auto;
+	padding-top:30rpx;
+	box-sizing: border-box;
+	/*background-image: url(https://j-image.missfresh.cn/img_20180516131955711.png);*/
+	/*background-repeat:no-repeat;*/
+	/*background-size:100% 100%;*/
+	position:relative;
+}
+.mapacketIteBg{
+	width:100%;
+	height:100%;
+	position: absolute;
+	z-index: -1;
+}
+.mask{
+	width:100%;
+	height:100%;
+	background: rgba(255,255,255,0.5);
+	position: absolute;
+	z-index: 10;
+}
+.priceCon{
+	width:200rpx;
+	height:190rpx;
+	text-align: center;
+	line-height: 190rpx;
+	float:left;
+}
+.money{
+	font-size: 24rpx;
+	color:#B17630 ;
+
+}
+.price{
+	font-size: 56rpx;
+	color:#B17630 ;
+	font-weight: bolder;
+}
+.size{
+	font-size: 34rpx;
+	font-weight: bolder;
+}
+.description{
+	height:190rpx;
+	padding-top:36rpx;
+	box-sizing: border-box;
+}
+.title{
+	font-size: 28rpx;
+	font-weight: bolder;
+	color:#474245;
+}
+.text{
+	margin-top: 10rpx;
+	font-size: 24rpx;
+	line-height: 35rpx;
+	color:#474245;
+	display:inline-block;
+}
+
+.timeCon{
+	width:625rpx;
+	height:80rpx;
+	margin:0 auto;
+	display:flex;
+	align-items: center;
+	border-top:1rpx dotted #E5C98E;
+}
+
+.time{
+	font-size: 24rpx;
+	color:#B17630 
+}
+.use{
+	display:inline-block;
+	font-size: 24rpx;
+	width:128rpx;
+	height: 48rpx;
+	line-height: 48rpx;
+	text-align: center;
+	border-radius: 6rpx;
+	border:1rpx solid #474245;
+	position: absolute;
+	right:30rpx;
+}
+.loading {
+    height: 90rpx;
+    width: 204rpx;
+    position: absolute;
+    top: 500rpx;
+    left: 50%;
+    margin-left: -51px;
+}
+
+.bg{
+	background: rgba(0,0,0,0.6);
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom:0;
+	right:0;
+	z-index:10;
+	width:100%;
+}
+.dialog{
+	background:#fff;
+	width:500rpx;
+	height:400rpx;
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom:0;
+	right:0;
+	margin: auto;
+	border-radius: 10rpx;
+	text-align: center;
+	z-index:20;
+	color: #fff;
+    border-radius: 10rpx;
+}
+.tip{
+	margin-top: 40rpx;
+	text-align: center;
+	font-size: 28rpx;
+	color: #727073;
+}
+.hint{
+	width:370rpx;
+	margin:0 auto;
+	color: #727073;
+	font-size: 28rpx;
+	margin-top: 40rpx;
+}
+.cancel{
+	font-size: 28rpx;
+	background: #c6c6c6;
+	width: 200rpx;
+	line-height: 80rpx;
+	margin-top: 100rpx;
+	display: inline-block;
+	border-radius: 4px;
+	margin-right: 30rpx;
+}
+.open{
+	font-size: 28rpx;
+	width: 200rpx;
+	line-height: 80rpx;
+	display: inline-block;
+	background: #ff4891;
+	border-radius: 2px;
+  
+}
+  

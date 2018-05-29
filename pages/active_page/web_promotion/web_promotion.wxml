@@ -1,0 +1,42 @@
+<!--web_promotion.wxml-->
+<import src="/utils/templates/product_item/product_item.wxml"/>
+<import src="/utils/templates/wetoast/wetoast.wxml"/>
+<import src="/utils/templates/cart_icon/cart_icon.wxml"/>
+<template is="wetoast" data="{{...__wetoast__}}"/>
+
+<!-- 小神推事件抓取组件 -->
+<import src="../../template/template.wxml" />
+<template wx:if="{{!is_showHideBtn}}" is='hideBtn'data="{{hideBtnData}}"></template>
+<view class="container" wx:if="{{jwebPromotionData}}">
+    <view class="web-promotion-section" wx:if="{{jwebPromotionData}}">
+        <!-- 整个活动页展示数据的List -->
+        <view wx:if="{{jwebPromotionData.productList && jwebPromotionData.productList.length > 0}}" wx:for="{{jwebPromotionData.productList}}"
+            wx:for-item="promotionItem" wx:key="{{index}}">
+            <!-- promotion_info -->
+            <view class='product-list-item' wx:if="{{promotionItem.promotion_info && promotionItem.promotion_info.length > 0}}" bindtap="bannerClick" data-banner="{{promotionInfoItem}}" wx:for="{{promotionItem.promotion_info}}" wx:for-item="promotionInfoItem" wx:key="{{promotionInfoItem.id}}">
+                <image class='promotion-info-item-image' src="{{promotionInfoItem.path}}" mode="widthFix" data-image-index="{{idx}}"></image>
+            </view>
+            <view class="products-title" wx:if="{{jwebPromotionData.title}}">
+                <view class="left-line"></view>
+                <view class="title-text">{{jwebPromotionData.title}}</view>
+                <view class="right-line"></view>
+            </view>
+            <!-- products -->
+            <view class="products-container" wx:if="{{promotionItem.products && promotionItem.products.length > 0}}" wx:for="{{promotionItem.products}}" wx:for-item="product" wx:key="{{product.sku}}" wx:for-index="productIndex">
+                <template is="product-item" data="{{product, productIndex, productFromCartInfos, subscribeArrivalRemind, chooseProduct, promotionTagWidth: promotionTags[productIndex].width, priceTagUrl: miniStartInfo && miniStartInfo.priceTag, priceTagWidth, getPriceTagWidth}}" />
+            </view>
+            <!-- below_info -->
+            <view class="below-info-container" wx:if="{{promotionItem.below_info && promotionItem.below_info.length > 0}}" wx:for="{{promotionItem.below_info}}" wx:for-item="belowInfo" wx:key="{{belowInfo.id}}" wx:for-index="belowInfoIndex">
+                <image class="below-info-image" src="{{belowInfo.path}}" mode="widthFix" style="width: 100%; height: {{belowInfo.imgHeight}}rpx"></image>
+            </view>
+        </view>
+    </view>
+    <view class="skip-btn-wrapper" wx:if="{{jwebPromotionData.bt_name}}" catchtap="goToIndexPage">
+        <view class="skip-btn">
+            <text class="btn-text">{{jwebPromotionData.bt_name}}</text>
+            <!-- <image class="coupon-arrow" src="../../../images/coupons-jiantou.png" mode="widthFix"></image> -->
+        </view>
+    </view>
+    <view class="blank-filler" wx:if="{{jwebPromotionData.bt_name}}"></view>
+    <template is="cart-icon" wx:if="{{jwebPromotionData.productList[0].products && jwebPromotionData.productList[0].products.length}}" data="{{cartCount, cartClick}}" />
+</view>

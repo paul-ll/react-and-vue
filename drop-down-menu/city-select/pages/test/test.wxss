@@ -1,8 +1,0 @@
-@import "../../selectarea/selectarea.wxss";
-button {
-    margin: 30px;
-    background-color:#46c !important;
-}
-.txt {
-    text-align: center;
-}

@@ -1,0 +1,322 @@
+<!-- 小神推事件抓取组件 -->
+<import src="../../template/template.wxml" />
+<template wx:if="{{!is_showHideBtn}}" is='hideBtn' data="{{hideBtnData}}"></template>
+<import src="/utils/templates/display_list/display_list.wxml" />
+<!--detail.wxml-->
+<import src="/utils/templates/order_scroller/order_scroller.wxml" />
+<import src="/utils/templates/wetoast/wetoast.wxml" />
+<template is="wetoast" data="{{...__wetoast__}}" />
+<view class="cover" wx:if="{{coverView}}">
+</view>
+<!-- <block wx:if="{{noNetwork == true}}">
+    <view class="no-network">
+        <view class="network-container">
+            <view class="wifi-icon"></view>
+            <view class="tip-text">您的网速好像不太给力,请重试</view>
+            <view class="refresh-net" bindtap="reconnect">重新加载</view>
+        </view>
+        <view class="network-reconnect" wx:if='{{reconnecting == true}}'>
+            <image class="loadingimg" src='/images/loading.gif' mode='aspectFit'></image>
+        </view>
+    </view>
+</block> -->
+
+<import src="/utils/templates/no_network/no_network.wxml" />
+<template is="network" data="{{...network}}" />
+
+<import src="/utils/templates/count_time_canvas/count_time_canvas.wxml" />
+
+<block wx:if="{{coverView}}">
+  <view class="pay-page">
+    <view class="middle-view">
+      <view class="inner-view">
+        <view class="pay-box">
+          <image bindtap="cancelPayBox" class="pay-cancel" src="/images/pay-cancel.png" mode="aspectFit"></image>
+          <view class="pay-title">优鲜余额支付</view>
+          <block wx:if="{{paying==false}}">
+            <view class="pay-text">请输入您优鲜余额支付密码</view>
+            <input class="pay-hidden-input" auto-focus="true" maxlength="6" bindinput="handleInput" type="number" />
+            <image class="pay-input" src="/images/pay-input1.png" mode="aspectFit" wx:if="{{inputLength==1}}"></image>
+            <image class="pay-input" src="/images/pay-input2.png" mode="aspectFit" wx:elif="{{inputLength==2}}"></image>
+            <image class="pay-input" src="/images/pay-input3.png" mode="aspectFit" wx:elif="{{inputLength==3}}"></image>
+            <image class="pay-input" src="/images/pay-input4.png" mode="aspectFit" wx:elif="{{inputLength==4}}"></image>
+            <image class="pay-input" src="/images/pay-input5.png" mode="aspectFit" wx:elif="{{inputLength==5}}"></image>
+            <image class="pay-input" src="/images/pay-input6.png" mode="aspectFit" wx:elif="{{inputLength==6}}"></image>
+            <image class="pay-input" src="/images/pay-input0.png" mode="aspectFit" wx:else></image>
+            <view class="forget-passwd" catchtap="forgetPasswd">
+              <view class="forget-passwd-text">
+                忘记密码
+              </view>
+              <image class="forget-passwd-image" src="/images/youjt.png" mode="aspectFit"></image>
+            </view>
+          </block>
+          <block wx:else>
+            <view class="pay-paying-box">
+              <image class="pay-paying-image" src="/images/paying.png" mode="aspectFit"></image>
+              <view class="pay-paying-content">支付中...</view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>
+<view class="container">
+  <view class="order-detail-section" wx:if="{{isLoad == true}}">
+    <!-- 超时显示优惠券 -->
+    <view class="compensate-discount-card" wx:if='{{isOverTime == true}}'>
+      <view class="compensate-title" wx:if='{{shippedTime}}'>
+        <text class="compensate-time">{{shippedTime}}</text>
+        <!-- <image class="compensate-logo" src='/images/2hour.png'></image> -->
+      </view>
+      <view class="compensate-image-wraper">
+        <image class="compensate_image" src="/images/order_discount_img.png" mode="{{}}"></image>
+        <!-- <image class="compensate-image-left" src='/images/order-discount-left.png'></image>
+                <image class="compensate-image-right" src='/images/order-discount-right.png'></image> -->
+        <!-- <view class="compensate-type">{{orderChromeInfo.voucher.vocher_type_name}}</view> -->
+        <view class="compensate-count">
+          <text class="compensate-count-logo">￥</text>
+          <text>{{orderChromeInfo.voucher.preferential_price/100}}</text>
+        </view>
+        <view class="compensate-dec">{{orderChromeInfo.voucher.content}}</view>
+      </view>
+      <view class="count-down-flex">
+        <view class="count-down-img">
+          <image class="count-down-image" src="{{orderChromeInfo.icon_img}}" mode="{{}}"></image>
+        </view>
+        <view class="count-down-dec">{{orderChromeInfo.prompt_message}}</view>
+      </view>
+      <!-- <view class="compensate-tip">{{orderChromeInfo.not_give_voucher_message}}</view> -->
+    </view>
+
+
+    <view class="order-detail-status" wx:if='{{hideDiscountCard == true}}'>
+      <image wx:if='{{!isOverTime}}' class="order-detail-status-img" src='/images/order_{{orderStatus}}.png' mode='aspectFit'></image>
+      <!-- <view class="order-detail-status-text">{{orderStatusName}}</view> -->
+      <view class="count-down-order">
+        <view bindtap="{{orderExpressMsg.length>0 ? 'goToIfo':''}}" class="count-down-info">
+          {{orderDetail.status_msg}}
+        </view>
+        <image wx:if="{{orderExpressMsg.length>0}}" class="count-down-info-img" src="/images/unfold-arrow.png" mode="{{}}"></image>
+      </view>
+      <view class='refundAdnPhone'>
+        <view class='order-detail-phone {{orderDetail.refund_expire!=0?"gray-color":""}}' wx:if="{{orderDetail.status=='FINISHED'}}"
+          data-order_id='{{orderDetail.id}}' bindtap='goRefund'>{{orderDetail.ever_refunded==0?'申请退款':'退款详情'}}</view>
+
+        <view wx:if='{{orderStatus != "CANCELED"}}' class="order-detail-phone" bindtap="contactCustomer">
+          联系客服
+        </view>
+      </view>
+    </view>
+
+
+    <template is="countdown" data="{{orderChromeInfo, overTimeList, hideDiscountCard,orderDetail,orderExpressMsg, orderNo, countTime}}"
+    />
+    <!-- 订单快递信息 -->
+    <!-- <view class="order-detail-express-wraper" wx:if="{{orderExpressMsg.length>0}}">
+            <view class="order-detail-express">
+                <view class="order-detail-express-msg" wx:for='{{orderExpressMsg}}' wx:for-item='expressMsg'>
+                    <view class="order-detail-express-msg-status">{{expressMsg.message}}</view>
+                    <view class="order-detail-express-msg-time">{{expressMsg.time}}</view>
+                    <image class="order-spot" src='/images/order-{{index == 0 ? "" : "not-"}}checked.png'></image>
+                </view>
+            </view>
+        </view> -->
+
+
+
+    <!-- 收货地址-->
+    <view class="order-detail-receiver-info">
+      <view class="order-detail-people">
+        <view class="order-detail-receiver-title">
+          收货地址:
+        </view>
+        <view class="order-detail-receiver-name margin_center">{{orderDetail.receiver_name}}</view>
+        <view class="order-detail-receiver-number">{{orderDetail.receiver_phone_number}}</view>
+      </view>
+      <!-- <view class="order-detail-address"> -->
+      <!--<view class="order-detail-receiver-city">{{orderDetail.receiver_city}}</view>
+                <view class="order-detail-receiver-area">{{orderDetail.receiver_area}}</view>-->
+      <view class="order-detail-receiver-address">{{receiverAddress}} </view>
+      <!-- </view> -->
+
+    </view>
+    <!-- 商品信息 -->
+    <view class="order_products_info">
+      <view class="order_info_title">
+        商品信息
+      </view>
+      <template is="order-scroller" data="{{activeOrderList: orderDetail.order_items, orderCount, openOrderList: 'openOrderList'}}"></template>
+    </view>
+    <!-- 订单信息-->
+    <view class="order_info">
+      <view class="order_info_main">
+        <view class="order_info_title">
+          订单信息
+        </view>
+        <view class="order_info_flex" wx:if="{{orderDetail.order_no}}">
+          <view class="order_info_text">
+            订单编号：
+          </view>
+          <view class="order_info_text">
+            {{orderDetail.order_no}}
+          </view>
+        </view>
+        <view class="order_info_flex" wx:if="{{orderDetail.trade_no}}">
+          <view class="order_info_text">
+            交易流水：
+          </view>
+          <view class="order_info_text">
+            {{orderDetail.trade_no}}
+          </view>
+        </view>
+        <view class="order_info_flex" wx:if="{{orderDetail.created_time}}">
+          <view class="order_info_text">
+            创建时间：
+          </view>
+          <view class="order_info_text">
+            {{orderDetail.created_time}}
+          </view>
+        </view>
+        <view class="order_info_flex" wx:if="{{orderDetail.pay_time}}">
+          <view class="order_info_text">
+            付款时间：
+          </view>
+          <view class="order_info_text">
+            {{orderDetail.pay_time}}
+          </view>
+        </view>
+        <view class="order_info_flex" wx:if="{{orderDetail.shipping_code}}">
+          <view class="order_info_text">
+            快速单号：
+          </view>
+          <view class="order_info_text">
+            {{orderDetail.shipping_code}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="order-detail-courier-info" wx:if="{{orderDetailItem.courier_info.name!=null && orderDetailItem.courier_info.tele!=null}}">
+      <view class="order-detail-courier-title">配送员：</view>
+      <view class="order-detail-courier-name">{{orderDetailItem.courier_info.name}}</view>
+      <view class="order-detail-courier-tele">{{orderDetailItem.courier_info.tele}}</view>
+    </view>
+
+
+    <!-- 收货地址-->
+    <view bindtap="">
+
+    </view>
+
+
+    <view class="order-detail-price">
+      <template is="display-list" data="{{ displayList: orderDetail.display_list, clickDisplay: 'clickDisplay', isShowDisplayDetail: isShowDisplayDetail, flodUp: 'flodUp' }}"></template>
+
+      <view class="order-detail-pay-price">
+        <view class="order-detail-pay-price-amount">￥{{orderDetail.pay_price.amount/100}}</view>
+        <view class="order-detail-pay-price-title">{{orderDetail.pay_price.title}}:</view>
+      </view>
+
+      <block wx:if="{{orderDetail.plus_balance && orderStatus != 'CANCELED'}}">
+        <view class='order-detail-10-line-space'></view>
+
+        <view class="order-detail-display-price order-detail-display-item">
+          <view class="order-detail-display-item-title">余额支付</view>
+          <view class="order-detail-display-item-amount">￥{{orderDetail.plus_balance/100}}</view>
+        </view>
+      </block>
+
+      <!--会员卡开卡信息-->
+      <block wx:elif="{{vipCardInfo}}">
+        <view>
+          <view class='order-detail-10-line-space'></view>
+          <view class="vip-card-back-cont">
+            <image class="vip-card-back-icon" src="{{vipCardInfo.icon_img}}"></image>
+            <view class="vip-card-back-text">{{vipCardInfo.card_text}}</view>
+            <view class="vip-card-back-info-cont">
+              <view class="vip-card-back-info-price">¥{{vipCardInfo.back_cash/100}}</view>
+              <view class="vip-card-back-info-text">{{vipCardInfo.status_text}}</view>
+            </view>
+          </view>
+          <view style="padding:20rpx;border-top:2rpx solid #e6e6e6;margin:0 20rpx;">
+            <view class="cart-vip-card-icon">
+              <view class="cart-vip-item-icon-cont">
+                <image class="cart-vip-item-icon" src="{{vipCardInfo.newicon_img}}" mode="aspectFit"></image>
+              </view>
+              <view class="cart-vip-item-title-cont">
+                <block wx:if="{{vipCardInfo.cardDocTextArray && vipCardInfo.cardDocTextArray.length > 0}}">
+                  <view class="cart-vip-item-subtitle" wx:for="{{vipCardInfo.cardDocTextArray}}" wx:for-item="cardDocItem" wx:for-index="cardDocIndex"
+                    style="font-weight: {{cardDocIndex % 2 == 1 ? 'bold' : 'normal'}};">{{cardDocItem}}</view>
+                </block>
+                <block wx:else>
+                  {{item.card_doc}}
+                </block>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+
+    </view>
+    <block wx:if="{{orderDetail.status === 'PENDING'}}">
+      <view class="all-balance-pay-view" wx:if="{{orderDetail.mryxpay_balance!=0 && orderDetail.mryxpay_balance>=orderDetail.pay_price.amount}}">
+        <view class="balance-pay">储蓄支付(余额￥{{orderDetail.mryxpay_balance/100}})</view>
+        <view class="price-amount">￥{{orderDetail.pay_price.amount/100}}</view>
+      </view>
+      <view class="all-balance-pay-view" wx:elif="{{orderDetail.mryxpay_balance!=0 && orderDetail.mryxpay_balance<orderDetail.pay_price.amount}}">
+        <view class="balance-pay-view">
+          <view class="balance-pay">储蓄支付(余额￥{{orderDetail.mryxpay_balance/100}})</view>
+          <view class="price-amount">￥{{orderDetail.mryxpay_balance/100}}</view>
+        </view>
+        <view>
+          <view class="balance-pay">还需支付</view>
+          <view class="price-amount">
+            ￥{{(orderDetail.pay_price.amount-orderDetail.plus_balance)/100}}
+          </view>
+        </view>
+      </view>
+      <view class="all-balance-pay-view" wx:else>
+        <view>
+          <view class="balance-pay">还需支付</view>
+          <view class="price-amount">
+              ￥{{(orderDetail.pay_price.amount-orderDetail.plus_balance)/100}}
+          </view>
+        </view>
+      </view>
+    </block>
+    <view class="full-up-view" wx:if="{{orderDetail.status === 'PENDING' || orderDetail.status === 'PAID' || orderDetail.status === 'FINISHED'}}"></view>
+    <view class="order-detail-bottom-operation">
+      <view class="order-detail-pay" wx:if="{{orderDetail.status === 'PENDING'}}">
+        <form bindsubmit="cancelPay" report-submit="true" class="order-detail-cancel">
+          <button formType='submit' class="order-detail-pay-btn">取消订单</button>
+        </form>
+        <!-- <view class="order-detail-cancel" bindtap="cancelPay">取消订单</view> -->
+        <view class="order-detail-go-pay" bindtap="goPay" wx:if="{{isGoPay == false}}">
+          <view class="order-detail-pay-text">去支付</view>
+          <image class="order-detail-pay-image" src="/images/pay.png" mode="aspectFit"></image>
+        </view>
+        <view class="order-detail-go-pay" wx:elif="{{isGoPay == true}}">
+          <view class="order-detail-pay-text">去支付</view>
+          <image class="order-detail-pay-image" src="/images/pay.png" mode="aspectFit"></image>
+        </view>
+      </view>
+      <!-- <view class="order-detail-pay" wx:elif="{{orderDetail.status === 'PAID'}}">
+                <form bindsubmit="cancelPay" report-submit="true" class="order-detail-pay-form">
+                    <button formType='submit' class="order-detail-pay-btn">取消订单</button>
+                </form> -->
+      <!-- <view class="order-detail-paid-cancel">取消订单</view> -->
+      <!-- </view> -->
+      <!-- <view class="order-detail-customer" wx:elif="{{orderDetail.status === 'FINISHED'}}" bindtap="contactCustomer">
+                <image class="order-detail-customer-image" src="/images/customer.png" mode="aspectFit"></image>
+                <view class="order-detail-customer-text">联系客服</view>
+            </view> -->
+    </view>
+    <view class="order_bottom_info">
+      如果收到的商品出现质量、错发、漏发等情况可联系客服
+    </view>
+  </view>
+  <view wx:elif="{{isLoad==false}}">
+    <image src="/images/loading-gif-vip.gif" class="detail-loading"></image>
+  </view>
+</view>

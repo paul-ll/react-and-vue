@@ -1,0 +1,71 @@
+<import src="/utils/templates/no_network/no_network.wxml" />
+<import src="/utils/templates/loading/loading.wxml" />
+<import src="/utils/templates/no_data/no_data.wxml" />
+
+<template is="network" data="{{...network}}" />
+<template is="noData" data="{{...nodata}}" />
+<template is="loading" wx:if='{{loading}}' />
+
+<view wx:if='{{haveData}}'>
+  <view style='background: white;'>
+    <view class='alert'>审核进度</view>
+    <view class="order-detail-express" wx:if="{{result.check_trace.length>0}}">
+      <view class="order-detail-express-msg" wx:for='{{result.check_trace}}' wx:for-item='item' wx:key='item' wx:for-index="idx">
+        <view class="order-detail-express-msg-status">{{item.message}}</view>
+        <view class="order-detail-express-msg-time">{{item.time}}</view>
+        <view class="order-spot {{idx==0?'oneSpot':''}}"></view>
+      </view>
+    </view>
+  </view>
+  <view style='background: white;  margin-top: 20rpx;' wx:if='{{result.check_word}}'>
+      <view class='alert'>审核留言</view>
+      <view class='message'>{{result.check_word}}</view>
+  </view>
+  <view style='background: white;  margin-top: 20rpx;'>
+    <view class='alert'>申请详情</view>
+    <view class='goodsDetail'>
+      <view class='goodsImg'>
+        <image src='{{item_detail.image}}'></image>
+      </view>
+      <view class='rightInfo'>
+        <view class='goodsName'>{{item_detail.name}}</view>
+        <view class='numAndPrice'>
+          <view class='num'>数量:{{item_detail.quantity}}</view>
+          <view class='detailPrice'>￥{{item_detail.raw_price/100.0}}</view>
+        </view>
+      </view>
+    </view>
+    <view class='payPrice'>
+      <view class='priceAlert'>实际退款金额</view>
+      <view class='priceText pink'>￥{{result.check_detail.refund_payment/100.0}}</view>
+    </view>
+    <view class='payPrice'>
+      <view class='priceAlert'>问题类型</view>
+      <view class='priceText'>{{selected_attach.name}}</view>
+    </view>
+    <view class='payPrice'>
+      <view class='priceAlert'>问题商品比例</view>
+      <view class='priceText'>{{result.check_detail.broken_label}}</view>
+    </view>
+    <view class='userGoodsImg'>
+      <view class='priceAlert' style='margin-top:28rpx'>商品图片</view>
+      <view class='userGoodsAll'>
+        <image wx:for='{{item_images}}' wx:key='item' src='{{item.url}}'></image>
+      </view>
+    </view>
+    <view class='problem'>
+      <view class='priceAlert' style='margin-top:28rpx'>问题描述</view>
+      <view class='problemText'>{{result.check_detail.customer_msg}}</view>
+      <view class='arrow'>
+        <image src='/images/arrow-down.png'></image>
+      </view>
+    </view>
+    <view class='problemLabel'>
+      <view class='labelItem' wx:for='{{selected_attach.items}}' wx:key='item'>{{item.content}}</view>
+    </view>
+  </view>
+  <view style='height:108rpx' wx:if='{{result.approved==0}}'></view>
+  <view class='sureBg' wx:if='{{result.approved==0}}'>
+    <view class='sure' bindtap='sureAction'>再次申请</view>
+  </view>
+</view>

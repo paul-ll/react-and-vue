@@ -1,0 +1,207 @@
+/* pages/active_page/product_share/list/list.wxss */
+
+.content-area {
+    padding-bottom: 120rpx;
+    position: relative;
+    width: 100%;
+    overflow-x:hidden;
+}
+
+.banner {
+    width: 750rpx;
+    height: 240rpx;
+    background: blueviolet;
+}
+
+.rule {
+    font-size: 24rpx;
+    color: #FFFFFF;
+    background: rgba(0, 0, 0, 0.30);
+    border: 0 solid #FFFFFF;
+    border-radius: 18rpx;
+    display: inline-block;
+    padding: 4rpx 16rpx;
+    position: absolute;
+    z-index: 1;
+    right: -10rpx;
+    top: 40rpx;
+}
+
+.center-container {
+    text-align: center;
+}
+
+.tips {
+    background: #FFF9E5;
+    font-size: 20rpx;
+    color: #4D4D4D;
+    padding: 16rpx;
+    text-align: center;
+    line-height: normal;
+}
+
+.product-share-list {
+    padding: 0 40rpx;
+}
+
+.item-opea-btn {
+    background: #ff4891;
+    border-radius: 4rpx;
+    display: inline-block;
+    color: white;
+    font-size: 24rpx;
+    padding: 8rpx 26rpx;
+}
+
+.item-opea-desc {
+    font-size: 24rpx;
+    color: #969696;
+    width: 140rpx;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.item-opea {
+    text-align: center;
+    float: right;
+}
+
+.item-desc-inline {
+    display: inline;
+    color: #ff4891;
+}
+
+.item-desc {
+    font-size: 28rpx;
+    color: #969696;
+    position: absolute;
+    bottom: 30rpx;
+    white-space: nowrap;
+    width: 280rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-title {
+    font-size: 32rpx;
+    color: #474346;
+    height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.item-sub-container {
+    display: inline-block;
+    width: 470rpx;
+    height: 240rpx;
+    text-align: left;
+    vertical-align: middle;
+    box-sizing: border-box;
+    padding: 30rpx 0 30rpx 30rpx;
+    position: relative;
+}
+
+.item-image {
+    width: 200rpx;
+    height: 200rpx;
+    margin: 36rpx 0;
+    vertical-align: middle;
+}
+
+.item {}
+
+.item-border {
+    border-bottom: 2rpx solid #e6e6e6;
+}
+
+/**活动规则弹窗样式*/
+
+.dialog-container {
+    transition: all 300ms;
+    -webkit-transition: all 300ms;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+}
+
+.black-mask {
+    background: rgba(0, 0, 0, .7);
+    width: 100%;
+    height: 100%;
+}
+
+.dialog-body {
+    width: 560rpx;
+    padding-bottom: 60rpx;
+    text-align: center;
+    background-image: linear-gradient(-224deg, #FFFCF9 0%, #FFFAF2 100%);
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+
+.dialog-body-bg {
+    background: #fff;
+}
+
+.pay-title {
+    text-align: center;
+    font-family: PingFangSC-Semibold;
+    font-size: 32rpx;
+    color: #474245;
+    letter-spacing: 0;
+    margin-top: 42rpx;
+}
+
+.pay-text {
+    text-align: left;
+    margin-top: 22rpx;
+    margin-bottom: 22rpx;
+    font-size: 26rpx;
+    padding: 0 60rpx;
+    color: #888888;
+    border: 0px solid;
+}
+
+.pay-text-list {
+    margin-bottom: 20rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #474245;
+    letter-spacing: 0;
+}
+
+.close-dialog-btn {
+    position: absolute;
+    width: 71rpx;
+    height: 101rpx;
+    top: -100rpx;
+    right: 0;
+    z-index: 2;
+}
+
+/**活动规则弹窗样式*/
+
+.status-center {
+    font-size: 14px;
+    color: #969696;
+}
+
+.status-image {
+    width: 180rpx;
+    height: 180rpx;
+}
+
+.status-image {
+    margin-top: 300rpx;
+}

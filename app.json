@@ -1,0 +1,112 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/explore/explore",
+    "pages/products/detail/detail",
+    "pages/vip/my_vip/my_vip",
+    "pages/cart/cart",
+    "pages/pay/checkout/checkout",
+    "pages/pay/finish/finish",
+    "pages/my_info/about_us/about_us",
+    "pages/my_info/check_phone/check_phone",
+    "pages/my_info/my_info/my_info",
+    "pages/my_info/my_balance/my_balance",
+    "pages/my_info/discount/discount",
+    "pages/my_info/set_passwd/set_passwd",
+    "pages/order/my_order/my_order",
+    "pages/order/detail/detail",
+    "pages/my_info/my_redpackage/redpackage_list/redpackage_list",
+    "pages/my_info/my_redpackage/active_instruction/active_instruction",
+    "pages/order/order_coupon/order_coupon",
+    "pages/order/order_item_list/order_item_list",
+    "pages/order/order_coupon_share/order_coupon_share",
+    "pages/group_red_packet/group_red_packet",
+    "utils/templates/no_data/no_data",
+    "pages/welcomePolite/myFriend/myFriend",
+    "pages/welcomePolite/welcomePolite",
+    "pages/welcomePolite/welcomeRule/welcomeRule",
+    "pages/welcomePolite/welcomeRank/welcomeRank",
+    "pages/address/my_address/my_address",
+    "pages/address/edit_address/edit_address",
+    "pages/address/locator_address/locator_address",
+    "pages/address/distribution_city/distribution_city",
+    "pages/order/order_red_package/order_red_package",
+    "pages/order/order_list_info/order_list_info",
+    "pages/order/refund_list/refund_list",
+    "pages/order/refund/refund",
+    "pages/sdk_target/sdk_target",
+    "pages/order/refund_process/refund_process",
+    "pages/my_info/url_config/url_config",
+    "pages/search/search",
+    "pages/vip/red_packets/red_packets",
+    "pages/vip/member_privileges/member_privileges",
+    "pages/vip/enjoy_service/enjoy_service",
+    "pages/vip/open_vip/open_vip",
+    "pages/vip/open_vip/vip_instruction/vip_instruction",
+    "pages/vip/invite_friend/invite_friend"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "每日优鲜",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#e6e6e6",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "color": "#969696",
+    "selectedColor": "#ff4891",
+    "borderStyle": "white",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab-bar-home.png",
+        "selectedIconPath": "images/tab-bar-home-active.png"
+      },
+      {
+        "pagePath": "pages/vip/my_vip/my_vip",
+        "text": "会员+",
+        "iconPath": "images/tab-bar-vip.png",
+        "selectedIconPath": "images/tab-bar-vip-active.png"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "购物车",
+        "iconPath": "images/tab-bar-cart.png",
+        "selectedIconPath": "images/tab-bar-cart-active.png"
+      },
+      {
+        "pagePath": "pages/my_info/my_info/my_info",
+        "text": "我的",
+        "iconPath": "images/tab-bar-mine.png",
+        "selectedIconPath": "images/tab-bar-mine-active.png"
+      }
+    ]
+  },
+  "subPackages": [
+    {
+      "root": "pages/active_page/",
+      "pages": [
+        "group_scan/group_scan",
+        "web_promotion/web_promotion",
+        "zero_power/zero_power",
+        "welcome_polite/welcome_polite",
+        "product_share/product_share",
+        "web_page/web_page",
+        "cash_red_packet/cash_red_packet",
+        "product_share/list/list",
+        "group_red_packet_v2/group_red_packet_v2",
+        "new_exclusive/new_exclusive",
+        "bargain/bargain_goods/bargain_goods",
+        "bargain/bargain_detail/bargain_detail"
+      ]
+    }
+  ],
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": false
+}

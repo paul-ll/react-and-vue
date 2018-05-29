@@ -1,0 +1,17 @@
+<template name="order-scroller">
+  <view class="order-item-container" bindtap="{{openOrderList}}">
+    <view class="right-arrow-wrapper">
+      <text class="total-order-items">共{{orderCount}}件</text>
+      <image class="right-arrow-img" src="/images/youjt.png"></image>
+    </view>
+    <view class="left-order-item-wrapper">
+      <view class="order-img-container" wx:for="{{activeOrderList}}" wx:key="item.sku">
+        <image class="order-item-img" src="{{item.image}}"></image>
+      </view>
+      <view class="order-img-container" wx:for="{{inactiveOrderList}}" wx:key="item.sku">
+        <image class="order-item-img" src="{{item.image}}"></image>
+        <view class="order-item-mask">已售罄</view>
+      </view>
+    </view>
+  </view>
+</template>

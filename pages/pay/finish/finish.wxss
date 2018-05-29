@@ -1,0 +1,79 @@
+/**finish.wxss**/
+@import "/utils/templates/count_time_canvas/count_time_canvas.wxss"
+page {
+    background: #fff;
+}
+
+.count-down-wraper {
+    margin-top: 30rpx;
+}
+
+.count-down-dec {
+    /* padding-top: 20rpx; */
+}
+
+.pay-success-icon {
+    margin: 0 auto;
+    margin-top: 60rpx;
+    width: 90rpx;
+    height: 90rpx;
+}
+
+.pay-success-icon image {
+    width: 100%;
+    height: 100%;
+}
+
+.hr {
+    margin: 0rpx auto;
+    width: 500rpx;
+    height: 20rpx;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.buttons {
+    margin: 0rpx auto;
+    width: 500rpx;
+    margin-top: 60rpx;
+}
+
+.left {
+    float: left;
+}
+
+.btn {
+    width: 212rpx;
+    height: 72rpx;
+    border-radius: 4rpx;
+    border: 1px solid #e6e6e6;
+    font-size: 28rpx;
+    line-height: 72rpx;
+    text-align: center;
+}
+
+.right {
+    float: right;
+}
+
+.finish-loading {
+    height: 90rpx;
+    width: 204rpx;
+    position: absolute;
+    top: 500rpx;
+    left: 50%;
+    margin-left: -51px;
+}
+.risk{
+   display:block;
+   width:160rpx;
+   height:160rpx; 
+   margin:60rpx auto; 
+}
+.riskText{
+  width:625rpx;
+  margin:0 auto;
+  line-height: 34rpx;
+  font-size:24rpx;
+  color:#474245;
+  text-align: center;
+}

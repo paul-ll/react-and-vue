@@ -1,0 +1,174 @@
+<!--商品部分-->
+<template name="productSingleItem">
+    <wxs module="utils">
+    // 十进制颜色 ==> 十六进制
+    function deciToHex(color, defaultColor) {
+      // 指定个非法的值不生效
+      if (color && color[0] === '#') {
+        return color
+      }
+      var c = defaultColor || ''
+      color = parseInt(color)
+      if (color === undefined || color > 16777215 || color < 0 || color === null) {
+        return c
+      }
+      c = color.toString(16)
+      c = leftZeroPad(c, 6)
+      c = '#' + c
+      return c
+    }
+    // 左填充
+    function leftZeroPad(val, minLength) {
+      var MANY_ZEROS = '000000000000000000'
+      if (typeof(val) !== 'string') {
+        val = String(val)
+      }
+      return (MANY_ZEROS.substring(0, minLength - val.length)) + val
+    }
+    module.exports.deciToHex = deciToHex
+  </wxs>
+    <view class="product-sub-area">
+        <view class="single-product" id="single-product-{{index}}" style="margin-right: {{index % 2 == 0 ?'18rpx;':''}}" wx:key="{{index}}" wx:for="{{products}}"
+            wx:for-item="product" data-sku="{{product.sku}}" data-product-pos="{{index}}" data-list-position="{{listPosition}}" bindtap="onItemClick">
+
+            <view class="product-image-area">
+                <image class="product-image" src="{{product.image}}"></image>
+                <view class="product-text-tag" wx:if="{{product.product_tags && product.product_tags.length > 0}}">
+                    <!-- <view class="tag-item" wx:for="{{product.product_tags}}" wx:for-item="tag" wx:for-index="tag_index" wx:key="{{tag_index}}">
+                        <image class="tag-icon" wx:if="{{tag.icon}}" src="{{tag.icon}}"></image>
+                        <text class="tag-name">{{tag.name}}</text>
+                    </view> -->
+                    <!--2018年05月04日18:32:17应拼红包产品兰鑫泽要求，考虑到双瀑流的美观性，将商品的tag只显示一个处理-->
+                    <view class="tag-item">
+                            <image class="tag-icon" wx:if="{{product.product_tags[0].icon}}" src="{{product.product_tags[0].icon}}"></image>
+                            <text class="tag-name">{{product.product_tags[0].name}}</text>
+                    </view>
+                </view>
+                <image wx:if="{{product.promote_tag}}" class="product-image-tag" src="{{product.promote_tag}}" bindload="getWidth" data-index="{{index}}" style="{{promotionTags[index].width ? 'width:'+promotionTags[index].width+'rpx' : '' }}"></image>
+            </view>
+
+            <view class="product-name">{{product.name}}</view>
+
+            <view class="price-control-area">
+                <view class="product-non-vipprice {{product.vip_price_pro.price_up.show_type == 0 || product.vip_price_pro.price_up.show_type == 2 ? 'hide-dom' : ''}}"
+                                    style="color: {{utils.deciToHex(product.vip_price_pro.price_up.color)}}">
+                                    <text class="product-non-vipprice-price">￥{{product.vip_price_pro.price_up.price/100}}</text>
+                </view>
+                <!-- <view class="product-price" wx:if="{{product.price.price_up.show_type == 1}}">¥{{product.price.price_up.price/100}}</view> -->
+                <view class="product-item-vipprice {{product.vip_price_pro.price_down.show_type == 0 ? 'hide-dom' : ''}} {{product.vip_price_pro.price_down.show_type == 2 ? 'line-through' : ''}}"
+                                    style="color: {{utils.deciToHex(product.vip_price_pro.price_down.color)}}">
+                    <view class="product-item-vipprice-price">￥{{product.vip_price_pro.price_down.price / 100}}</view>
+                    <image class="price-tag" wx:if="{{priceTagUrl && product.vip_price_pro.price_up.show_type != 2 && product.vip_price_pro.price_down.showTag == 1}}"
+                        src="{{priceTagUrl}}" style="height: 22rpx; width: {{priceTagWidth}}rpx" bindload="getPriceTagWidth"></image>
+                    <block wx:if="{{product.vip_price_pro.price_up.show_type == 2}}">
+                        <text class="price-right {{product.vip_price_pro.price_up.show_type == 2 ? 'line-through' : ''}}" style="color: {{utils.deciToHex(product.vip_price_pro.price_up.color)}}">￥{{product.vip_price_pro.price_up.price/100}}</text>
+                    </block>
+                </view>
+                <!-- <view class="product-vip-price">
+                    <view  wx:if="{{product.price.price_down.show_type == 1}}" style="display: inline;color: #ff4891;font-size: 24rpx;">¥</view> {{product.price.price_down.price/100}}
+                </view> -->
+                
+                <!--由于新老人商品数据不同，2018年05月05日14:49:36时改为只有新人才可以加车-->
+                <view class="product-add-cart" wx:if="{{product.isNewUser}}">
+                    <view class="product-add-cart-exist" wx:if="{{productFromCartInfos[product.sku].quantity>0 && productFromCartInfos[product.sku].isActive==1}}">
+                        <image data-product-sku="{{product.sku}}" data-product-title="{{product.name}}" catchtap="decrease" class="product-add-cart-decrease-image"
+                            src="/images/add-cart-decrease.png" mode="aspectFit"></image>
+
+                        <view class="product-add-cart-quantity">{{productFromCartInfos[product.sku].quantity}}</view>
+
+                        <image class="product-add-cart-increase-image" src="/images/add-cart-increase.png" catchtap="addToCart" mode="aspectFit"
+                            data-product-sku="{{product.sku}}" data-quantity="{{productFromCartInfos[product.sku].quantity}}"
+                            data-stock="{{product.stock}}" data-seckill-limit="{{product.seckill_limit}}" data-product-pos="{{index}}" data-list-position="{{listPosition}}"></image>
+                    </view>
+                    <image wx:elif="{{ product.image || ( product.image == '' && product.stock > 0 ) }}" catchtap="addToCart" class="product-add-cart-image product-add-cart-no-exist"
+                        data-product-sku="{{product.sku}}" data-quantity="{{productFromCartInfos[product.sku].quantity}}" data-stock="{{product.stock}}"
+                        data-seckill-limit="{{product.seckill_limit}}" data-product-pos="{{index}}" data-list-position="{{listPosition}}" src="/images/add-cart.png" mode="aspectFit"></image>
+                </view>
+            </view>
+
+        </view>
+    </view>
+</template>
+<!--商品详情推荐商品列表横向滑动模板  -->
+<template name="productHSlipItem">
+    <wxs module="utils">
+    // 十进制颜色 ==> 十六进制
+    function deciToHex(color, defaultColor) {
+      // 指定个非法的值不生效
+      if (color && color[0] === '#') {
+        return color
+      }
+      var c = defaultColor || ''
+      color = parseInt(color)
+      if (color === undefined || color > 16777215 || color < 0 || color === null) {
+        return c
+      }
+      c = color.toString(16)
+      c = leftZeroPad(c, 6)
+      c = '#' + c
+      return c
+    }
+    // 左填充
+    function leftZeroPad(val, minLength) {
+      var MANY_ZEROS = '000000000000000000'
+      if (typeof(val) !== 'string') {
+        val = String(val)
+      }
+      return (MANY_ZEROS.substring(0, minLength - val.length)) + val
+    }
+    module.exports.deciToHex = deciToHex
+  </wxs>
+    <scroll-view scroll-x scroll-with-animation="true" class="product-h-slip">
+        <view class="single-product-h-slip" id="single-product-h-slip-{{index}}" wx:key="{{index}}" wx:for="{{products}}"
+            wx:for-item="product" data-sku="{{product.sku}}" data-product-pos="{{index}}" data-list-position="{{listPosition}}" bindtap="onItemClick">
+
+            <view class="product-image-area-h-slip">
+                <image class="product-image-h-slip" id='product-image-h-slip-{{index}}' data-img-url='{{product.image}}' src="{{product.image}}"></image>
+                <!--2018年05月04日18:32:17应拼红包产品兰鑫泽要求，考虑到双瀑流的美观性，将商品的tag只显示一个处理-->
+                <!-- <view class="product-text-tag" wx:if="{{product.product_tags && product.product_tags.length > 0}}">
+                    <view class="tag-item">
+                            <image class="tag-icon" wx:if="{{product.product_tags[0].icon}}" src="{{product.product_tags[0].icon}}"></image>
+                            <text class="tag-name">{{product.product_tags[0].name}}</text>
+                    </view>
+                </view> -->
+                <image class="product-image-tag-h-slip" src="{{product.promote_tag}}" wx:if="{{product.promote_tag}}" style="{{promotionTags[index].width ? 'width:'+promotionTags[index].width+'rpx' : '' }}" bindload="getWidth" data-index="{{index}}"></image>
+            </view>
+
+            <view class="product-name-h-slip">{{product.name}}</view>
+
+            <view class="price-control-area-h-slip ">
+                <view class="product-non-vipprice {{product.vip_price_pro.price_up.show_type == 0 || product.vip_price_pro.price_up.show_type == 2 ? 'hide-dom' : ''}}"
+                                    style="color: {{utils.deciToHex(product.vip_price_pro.price_up.color)}}">
+                                    <text class="product-non-vipprice-price">￥{{product.vip_price_pro.price_up.price/100}}</text>
+                </view>
+                <view class="product-item-vipprice {{product.vip_price_pro.price_down.show_type == 0 ? 'hide-dom' : ''}} {{product.vip_price_pro.price_down.show_type == 2 ? 'line-through' : ''}}"
+                                    style="color: {{utils.deciToHex(product.vip_price_pro.price_down.color)}}">
+                    <view wx:if="{{!product.vip_price_pro.price_down.showTag}}" class="product-item-vipprice-price" style="{{productFromCartInfos[product.sku].quantity>0 ? 'font-size:24rpx;' :''}}">￥{{product.vip_price_pro.price_down.price / 100}}</view>
+                    <view wx:if="{{product.vip_price_pro.price_down.showTag == 1 && (productFromCartInfos[product.sku].quantity == 0 || !productFromCartInfos[product.sku])}}" class="product-item-vipprice-price">￥{{product.vip_price_pro.price_down.price / 100}}</view>                    
+                    <image class="price-tag" wx:if="{{priceTagUrl && product.vip_price_pro.price_up.show_type != 2 && product.vip_price_pro.price_down.showTag == 1}}"
+                        src="{{priceTagUrl}}" style="height: 22rpx; width: {{priceTagWidth}}rpx" bindload="getPriceTagWidth"></image>
+                    <block wx:if="{{product.vip_price_pro.price_up.show_type == 2 && (productFromCartInfos[product.sku].quantity == 0 || !productFromCartInfos[product.sku])}}">
+                        <text class="price-right {{product.vip_price_pro.price_up.show_type == 2 ? 'line-through' : ''}}" style="color: {{utils.deciToHex(product.vip_price_pro.price_up.color)}}">￥{{product.vip_price_pro.price_up.price/100}}</text>
+                    </block>
+                </view>
+                <!--由于新老人商品数据不同，2018年05月05日14:49:36时改为只有新人才可以加车-->
+                <view class="product-add-cart-h-slip" wx:if="{{product.isNewUser}}">
+                    <view class="product-add-cart-exist" wx:if="{{productFromCartInfos[product.sku].quantity>0 && productFromCartInfos[product.sku].isActive==1}}">
+                        <image data-product-sku="{{product.sku}}" data-product-title="{{product.name}}" catchtap="decrease" class="product-add-cart-decrease-image"
+                            src="/images/add-cart-decrease.png" mode="aspectFit"></image>
+
+                        <view class="product-add-cart-quantity">{{productFromCartInfos[product.sku].quantity}}</view>
+
+                        <image class="product-add-cart-increase-image" src="/images/add-cart-increase.png" catchtap="addToCart" mode="aspectFit"
+                            data-product-sku="{{product.sku}}" data-quantity="{{productFromCartInfos[product.sku].quantity}}"
+                            data-stock="{{product.stock}}" data-seckill-limit="{{product.seckill_limit}}" data-product-pos="{{index}}" data-list-position="{{listPosition}}"></image>
+                    </view>
+                    <image wx:elif="{{ product.image || ( product.image == '' && product.stock > 0 ) }}" catchtap="addToCart" class="product-add-cart-image-h-slip product-add-cart-no-exist"
+                        data-product-sku="{{product.sku}}" data-quantity="{{productFromCartInfos[product.sku].quantity}}" data-stock="{{product.stock}}"
+                        data-seckill-limit="{{product.seckill_limit}}" data-product-pos="{{index}}" data-list-position="{{listPosition}}"  src="/images/add-cart.png"></image>
+                </view>
+            </view>
+
+        </view>
+    </scroll-view>
+</template>

@@ -1,0 +1,18 @@
+<!-- discount.wxml -->
+<!-- 小神推事件抓取组件 -->
+<import src="../../template/template.wxml" />
+<template wx:if="{{!is_showHideBtn}}" is='hideBtn'data="{{hideBtnData}}"></template>
+<view class="container">
+	<view class="discount-card">
+		<image class="discount-card-img" src='/images/ticket-{{discountcard.discount_card_type == 1 ? "in" : "out-of"}}-use.png'></image>
+		<text class="discount-type">{{discountcard.discount_card_name}}</text>
+		<view class="discount-detail">
+			<text class="discount-deadline">{{discountcard.discount_card_desc}}</text>
+			<text class="discount-times" wx:if='{{discountcard.discount_card_undo_count != ""}}'>{{discountcard.discount_card_undo_count}}</text>
+		</view>
+	</view>
+	<view class="discount-power">
+		<image class="discount-power-img-up" src='{{discountcard.discount_card_fun_pic}}' mode='aspectFit top'></image>
+		<image class="discount-power-img-down" src='{{discountcard.discount_card_desc_pic}}' mode='aspectFit top'></image>
+	</view>
+</view>

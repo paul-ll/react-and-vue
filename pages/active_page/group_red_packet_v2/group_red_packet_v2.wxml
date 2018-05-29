@@ -1,0 +1,302 @@
+<import src="/utils/templates/wetoast/wetoast.wxml" />
+<import src="/utils/templates/no_network/no_network.wxml" />
+<import src="/utils/templates/loading/loading.wxml" />
+<import src="/utils/templates/no_data/no_data.wxml" />
+
+
+<template is="wetoast" data="{{...__wetoast__}}" />
+<template is="network" data="{{...network}}" />
+<template is="noData" data="{{...nodata}}" />
+<template is="loading" wx:if='{{loading}}' />
+<user_no_rule bind:haveRule="haveRule" wx:if='{{showNoRules}}'></user_no_rule>
+
+
+<import src="/utils/templates/product_single/product_single.wxml"></import>
+
+
+<loading hidden="{{loadingHidden}}">加载中...</loading>
+
+<!--活动结束，开团失败，团长到达上限  -->
+<view class="page" wx:if="{{page=='over'}}">
+  <image class="golden" src="https://j-image.missfresh.cn/img_20180421174125136.png"></image>
+  <view class="logo-tx">
+    <image class="logo-tx_img" src="https://j-image.missfresh.cn/img_20180424210702392.png"></image>
+  </view>
+  <image class="strawberry strawberryMargin" src="https://j-image.missfresh.cn/img_20180421180555144.png"></image>
+
+  <!--结束信息  -->
+  <view class="active-over-p">
+    <text wx:if='{{code==4}}'>活动正在系统升级中\n看看其他活动吧</text>
+    <text wx:elif='{{isGoing==0&&(haveGroupOn==null||haveGroupOn==0)}}'>活动已结束看看其他活动吧</text>
+    <text wx:else>今日参与活动次数已满\n看看其他活动吧</text>
+  </view>
+  <view class="card-box">
+    <image wx:for='{{moreInfo}}' wx:key='item' class="card-box-img" src="{{item.activityImageUrl}}" data-url='{{item.activityWeiXinAppLink}}' mode='widthFix' bindtap='goOtherAction'></image>
+  </view>
+</view>
+<!--参团失败  -->
+<view wx:elif="{{page=='unJoin'}}" class="page">
+  <image class="golden" src="https://j-image.missfresh.cn/img_20180421174125136.png"></image>
+  <view class="page-title">
+    <image class="page-title-img" src="https://j-image.missfresh.cn/img_20180421175845885.png"></image>
+  </view>
+  <image class="strawberry" src="https://j-image.missfresh.cn/img_20180421180555144.png"></image>
+  <view class="rule-btn" bindtap='showExplain'>活动规则</view>
+  <view class='redPacket'>
+    <image class='redPacketImg' src='https://j-image.missfresh.cn/img_20180424222415003.png'></image>
+    <!--干杯熊  -->
+    <image wx:if='{{groupon.status==1&&isExceedOpenLimit==1}}' class='bearOne' src='https://j-image.missfresh.cn/img_20180425101830242.png'></image>
+    <!--小熊  帮拆 -->
+    <image wx:elif='{{groupon.status!=0&&limit==0||limit==0&&groupon.status==1&&isExceedOpenLimit==0}}' class='bearThree' src='https://j-image.missfresh.cn/img_20180425103215451.png'></image>
+    <!--委屈熊  -->
+    <image wx:elif='{{limit==1}}' class='bearTwo' src='https://j-image.missfresh.cn/img_20180425102345837.png'></image>
+
+    <view class='joinName'>{{commander.nickName}}</view>
+    <image class='joinHeader' src='{{commander.headImg}}'></image>
+    <!--未参与,没到上限  -->
+    <view wx:if='{{limit==0&&groupon.status==1&&isExceedOpenLimit==0}}'>
+      <view class='joinSuccess'>
+        <view class='joinSuccessText'>快来帮我拆一下</view>
+        <image class='joinSuccessImg' src='/images/beg.png'></image>
+      </view>
+      <!--帮我拆  -->
+      <image class='bounceBtn' style='margin-top:46rpx;' src='https://j-image.missfresh.cn/img_20180425115629135.gif'>
+        <form bindsubmit="joinAction" report-submit='true'>
+          <button formType="submit">
+          </button>
+        </form>
+      </image>
+      <form bindsubmit="openGroup" report-submit='true'>
+        <button class='openGroup' formType="submit" data-type='dismantle_new'>
+          拆新红包
+        </button>
+      </form>
+    </view>
+    <view wx:else>
+      <view class='joinFail'>
+        <text>{{joinMessage}}</text>
+        <!-- <text wx:if='{{limit==1}}'>今日参与活动次数达到上限啦</text>
+        <text wx:elif='{{groupon.status==1&&isExceedOpenLimit==1}}'>谢谢\n你已经帮我拆过红包啦</text>
+        <text wx:elif='{{groupon.status==2}}'>来晚了\n好友的团已经拆完啦</text>
+        <text wx:elif='{{groupon.status==3}}'>来晚了\n好友的红包已经失效</text> -->
+      </view>
+      <!-- 去开团【赢红包】  -->
+      <image wx:if='{{limit==0}}' class='bounceBtn' style='margin-top:100rpx;' src='https://j-image.missfresh.cn/img_20180425141938566.gif'>
+        <form bindsubmit="openGroup" report-submit='true'>
+          <button formType="submit" data-type='fail'>
+          </button>
+        </form>
+      </image>
+      <!--查看更多福利  -->
+      <image wx:else class='bounceBtn' style='margin-top:100rpx;' src='https://j-image.missfresh.cn/img_20180502183238409.gif'>
+        <form bindsubmit="openGroup" report-submit='true'>
+          <button formType="submit" data-type='failMore'>
+          </button>
+        </form>
+      </image>
+    </view>
+  </view>
+</view>
+
+
+<!--参与者进行中  -->
+<view wx:if="{{page=='open'}}" class="page">
+  <!-- 开团, 用户参与成功了 -->
+  <!-- 固定UI区域 -->
+  <image class="golden" src="https://j-image.missfresh.cn/img_20180421174125136.png"></image>
+  <view class="page-title">
+    <image class="page-title-img" src="https://j-image.missfresh.cn/img_20180421175845885.png"></image>
+  </view>
+  <image class="strawberry" src="https://j-image.missfresh.cn/img_20180421180555144.png"></image>
+  <view class="rule-btn" catchtap='showExplain'>活动规则</view>
+
+  <!-- 团状态: 进行中, 有倒计时 -->
+  <view class="count-down" wx:if="{{groupon.status==1}}">
+    <view class='time-text'>距离结束</view>
+    <view class='time-last'>
+      <text class='time'>{{hour}}</text>
+      <text class='colon'>:</text>
+      <text class='time'>{{min}}</text>
+      <text class='colon'>:</text>
+      <text class='time'>{{second}}</text>
+      <text class='colon'>:</text>
+      <text class='small-time'>{{colon}}</text>
+    </view>
+  </view>
+
+  <!-- 团状态: 成功 -->
+  <view class="open-status" wx:elif="{{groupon.status==2}}">
+    <view class="open-status_p">恭喜你获得了{{redDetail.couponPrice}}元红包</view>
+  </view>
+  <!--失败  -->
+  <view class="open-status" wx:elif="{{groupon.status==3}}">
+    <view class="open-status_p">很遗憾，该红包团已经过期</view>
+  </view>
+  <!-- 内容区 -->
+  <view class="{{groupon.status==1?'goingMargin':'successMargin'}}">
+    <view class="content-area">
+      <!-- 开团成功 -->
+      <view class="light_box">
+        <!--跑马灯  -->
+        <image class="light_box_gif" src="https://j-image.missfresh.cn/img_20180421182338850.gif"></image>
+        <!--背景图  -->
+        <image class="light_box_content" src="https://j-image.missfresh.cn/img_20180421182745752.png"></image>
+        <view wx:if="{{groupon.status==2}}" class="join-user-box">
+          <view wx:for='{{awardList}}' wx:key='item' wx:for-index="idx" class="join-user-item">
+            <view class="user-item-img">
+              <image class="user-item-img_img" src="{{item.userHeadImg}}"></image>
+            </view>
+            <view class="user-item-name">
+              <view class="user-item-name_h4">{{item.userNickName}}</view>
+              <view class="{{idx==0?'message':'user-item-name_p'}}">{{item.describe}}</view>
+            </view>
+            <view class="user-item-count">
+              <view class="user-item-count_span">{{item.couponPrice}}</view>
+              <view class="user-item-count_em">元</view>
+            </view>
+            <!-- 手气最佳印章 -->
+            <image wx:if='{{idx==0}}' class="icon-bear-paw" src='https://j-image.missfresh.cn/img_20180427202453411.png'></image>
+          </view>
+        </view>
+        <view wx:if="{{groupon.status==1||groupon.status==3}}" class='light_content'>
+          <view class="content_img">
+            <view wx:for='{{grouponMemberList}}' wx:key='item' class='packet_content'>
+              <view wx:if='{{item.userType==1}}'>
+                <!--红包背景图  -->
+                <image class="content_user" src="https://j-image.missfresh.cn/img_20180507162729769.png">
+                </image>
+                <image class='user_header' src='{{item.userHeadImg}}'></image>
+                <image class='user_map' src='{{item.capImage}}'></image>
+              </view>
+              <view wx:if='{{item.userType==2}}'>
+                <!--红包  -->
+                <image class="content_ask" src="https://j-image.missfresh.cn/img_20180507155050192.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!--文案和按钮信息  -->
+        <view class="btn_open_view">
+          <view wx:if='{{groupon.status==1||groupon.status==3&&limit!=1}}' class="btn_text">
+            <view class="btn_text_left">拆成功还有机会获得额外</view>
+            <view class="btn_text_right">【现金奖励】</view>
+          </view>
+          <!-- 没到门槛 -->
+          <view wx:elif='{{groupon.status==2&&limit!=1}}' catchtap="goIndex" class="txt">获得{{redDetail.couponPrice}}元红包
+            <view class="under-line">去使用</view>
+          </view>
+          <!--到门槛  -->
+          <view wx:else class="txt">
+            今日参与活动次数已满
+          </view>
+          <!-- 立即邀请微信群好友 -->
+          <image wx:if='{{groupon.status==1}}' class="btn_open" src="https://j-image.missfresh.cn/img_20180507170543134.gif">
+            <button open-type='share'>
+            </button>
+          </image>
+          <!--重新开团赢现金  -->
+          <image wx:elif='{{groupon.status!=1&&isGoing==1&&limit!=1}}' class="btn_open" src="https://j-image.missfresh.cn/img_20180421185334647.gif">
+            <form bindsubmit="openGroup" report-submit='true'>
+              <button formType="submit" data-type='success_again_click'>
+              </button>
+            </form>
+          </image>
+          <!--去使用  -->
+          <image wx:else class="btn_open" src="https://j-image.missfresh.cn/img_20180425174420076.gif" data-type='index' bindtap='goIndex'></image>
+        </view>
+      </view>
+      <!--进行中小熊  -->
+      <image wx:if='{{groupon.status==1}}' class="light_box_success_two" src="https://j-image.missfresh.cn/img_20180425103215451.png"></image>
+      <!--成功小熊   -->
+      <image wx:if='{{groupon.status==2}}' class="light_box_success" src="https://j-image.missfresh.cn/img_20180421182705005.png"></image>
+      <!--委屈熊  -->
+      <image wx:if='{{groupon.status==3}}' class="light_box_success_three" src="https://j-image.missfresh.cn/img_20180425102345837.png"></image>
+    </view>
+  </view>
+</view>
+
+<view class='tips'>
+  <view wx:for='{{tipesInfo}}' wx:key='item' animation='{{item.animation}}' class='tipsItem'>
+    <view class='tipesInfoContent'>
+      <text class='tipsName'>{{item.nickName}}</text>{{item.text}}
+    </view>
+  </view>
+</view>
+
+<view class="bounced" bindtap="closeBounced" hidden='{{!showBounce}}'>
+  <view class='bouncedContent' catchtap='bounced'>
+    <image class='bouncedImg' src='https://j-image.missfresh.cn/img_20180424170831571.png'>
+    </image>
+    <!--新人  -->
+    <view wx:if='{{groupon.status==2}}'>
+      <view class='bounceTitle'>
+        <text>恭喜你!\n获得大额手气红包{{redDetail.couponPrice}}元</text>
+      </view>
+      <view class='subTitle'>
+        <!-- 再送你新人礼包一个 -->
+      </view>
+      <view class='newCoupon'>
+        <image class='newCouponImg' src='https://j-image.missfresh.cn/img_20180424180204871.png'></image>
+         <view>{{redDetail.redTitle}}</view> 
+      </view>
+      <!--去使用  -->
+      <image class='bounceBtn' src='https://j-image.missfresh.cn/img_20180424182622865.gif' bindtap='goNewPage'></image>
+      <view class='groupRecord' bindtap="sureCloseBounced">
+        <view>查看当前团记录</view>
+        <image class='rightArrow' src='/images/right-arrow-white.png'></image>
+      </view>
+    </view>
+    <!--到达活动次数弹框  -->
+    <view wx:if='{{groupon.status==3}}' class='overdue'>
+      <view class='bounceTitle' style='color:#C40F1C'>
+        <text>很遗憾\n该红包团已经过期</text>
+      </view>
+      <view class='subTitle'>
+        <text>今日参与活动次数\n达到上限啦</text>
+      </view>
+      <!--查看更多福利  -->
+      <image class='bounceBtn' src='https://j-image.missfresh.cn/img_20180424204810177.gif'>
+        <form bindsubmit="openGroup" report-submit='true'>
+          <button formType="submit" data-type='old'>
+          </button>
+        </form>
+      </image>
+      <view class='groupRecord' data-type='old' bindtap="closeBounced">
+        <view>查看当前团记录</view>
+        <image class='rightArrow' src='/images/right-arrow-white.png'></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class='bouncedexplain' hidden='{{!showExplain}}' bindtap='closeExlain'>
+  <image class='bouncedExplainImg' mode='widthFix' src='{{ruleImg}}'>
+  </image>
+</view>
+
+
+<view wx:if='{{goodsLoading}}' class="load-more-product">
+  <image class="load-more-gif" src="/images/cash-loading.gif"></image>
+  <text class="load-more-text">正在加载...</text>
+</view>
+
+<!--2018年05月04日18:27:00 拼红包相关需求，应产品兰鑫泽要求，考虑到UI美观性，将只有一个商品时作隐藏处理。-->
+<view wx:if='{{!goodsLoading&&pageData.products.length > 1}}'>
+  <view class='moreTop'>
+    <view class='moreLine'></view>
+    <view class='moreText'>推荐商品</view>
+    <view class='moreLine'></view>
+  </view>
+  <template is="productSingleItem" data="{{...pageData, ...cartInfo}}"></template>
+</view>
+
+
+
+<view class="groupBtn" hidden='{{hiddenTop}}'>
+  <view class="groupTop" bindtap='goToIndex'>
+    <image src="https://j-image.missfresh.cn/img_20180504173239619.png"></image>
+  </view>
+  <view class="groupTop" catchtap="topAction">
+    <image src="https://j-image.missfresh.cn/img_20180504173407907.png"></image>
+  </view>
+</view>

@@ -1,0 +1,38 @@
+<!--check_phone.wxml-->
+<import src="/utils/templates/wetoast/wetoast.wxml"/>
+<template is="wetoast" data="{{...__wetoast__}}"/>
+<!-- 小神推事件抓取组件 -->
+<import src="../../template/template.wxml" />
+<template wx:if="{{!is_showHideBtn}}" is='hideBtn'data="{{hideBtnData}}"></template>
+<view class="container">
+    <view class="check-phone-title">
+        <image class="check-title-image" src="/images/check-phone.png" mode="scaleToFill"></image>
+        <view class="check-title-text" wx:if="{{checkType==0}}">
+            为了您的账户安全请绑定手机
+        </view>
+        <view class="check-title-text" wx:elif="{{checkType==1}}">
+            为了您的账户安全请验证手机号
+        </view>
+    </view>
+    <view class="check-phone-info">
+        <view class="check-phone-info-num">
+            <view class="check-phone-info-num-input-content">
+                <input class="check-phone-info-num-input" type="number" placeholder="请输入您的手机号" maxlength="11" bindinput="listenerPhoneNumInput" value="{{phoneNumber}}"/>
+            </view>
+            <view class="check-phone-info-num-nosend-button" wx:if="{{sendCheckCodeType==0}}">
+                <view >获取验证码</view>
+            </view>
+            <view class="check-phone-info-num-cansend-button" wx:elif="{{sendCheckCodeType==1}}" catchtap="sendCheckCode">
+                <view>获取验证码</view>
+            </view>
+            <view class="check-phone-info-num-issend-button" wx:elif="{{sendCheckCodeType==2}}">{{checkCodeSecond}}s后重发</view>
+        </view>
+        <view class="check-phone-info-check-code">
+            <input class="check-phone-info-check-code-input" type="number" placeholder="请输入验证码" maxlength="6" bindinput="listenerCheckCodeInput" value="{{checkCode}}"/>
+        </view>
+    </view>
+    <view class="check-phone-info-commit">
+        <view class="check-phone-info-can-commit" wx:if="{{isCommit==true}}" catchtap="setPasswd">{{buttonContent}}</view>
+        <view class="check-phone-info-no-commit" wx:elif="{{isCommit==false}}">{{buttonContent}}</view>
+    </view>
+</view>

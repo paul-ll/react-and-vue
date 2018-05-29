@@ -1,0 +1,94 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.0.0",
+	"appid": "wxebf773691904eee9",
+	"projectname": "pingtuan",
+	"svr": "",
+	"client": "",
+	"qcloudRoot": "",
+	"miniprogramRoot": "",
+	"pluginRoot": "",
+	"scripts": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "弹窗",
+					"pathName": "pages/my_info/my_redpackage/redpackage_list/redpackage_list",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "退款列表",
+					"pathName": "pages/order/refund_list/refund_list",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "弹窗",
+					"pathName": "pages/order/refund/refund",
+					"query": ""
+				},
+				{
+					"id": 2,
+					"name": "红包",
+					"pathName": "pages/order/order_red_package/order_red_package",
+					"query": "orderId=31820631&userId=6521379&sign=dd79d6da"
+				},
+				{
+					"id": 3,
+					"name": "邀请",
+					"pathName": "pages/active_page/welcome_polite/welcome_polite",
+					"query": "inviteCode=4765203_ccebfc04&inviteId=CGJUZ85U"
+				},
+				{
+					"id": 5,
+					"name": "0000",
+					"pathName": "pages/active_page/zero_power/zero_power",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "订单",
+					"pathName": "pages/order/order_coupon/order_coupon",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "URL",
+					"pathName": "pages/my_info/url_config/url_config",
+					"query": ""
+				}
+			]
+		}
+	}
+}

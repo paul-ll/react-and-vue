@@ -1,0 +1,6 @@
+<template name="cart-icon">
+  <view class="cart-icon" catchtap="cartClick">
+    <image class="cart-bg" mode="scaleToFill" src="/images/cart-icon.png"></image>
+    <text class="cart-count" wx:if="{{cartCount}}">{{cartCount}}</text>
+  </view>
+</template>

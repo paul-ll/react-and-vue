@@ -1,0 +1,25 @@
+<!-- 小神推事件抓取组件 -->
+<import src="../../template/template.wxml" />
+<template wx:if="{{!is_showHideBtn}}" is='hideBtn'data="{{hideBtnData}}"></template>
+<!-- my_balance.wxml -->
+<view class="container">
+	<view class="my-balance">
+		<view class="my-balance-info">优鲜储值余额</view>
+		<view class="my-balance-detail">￥{{mybalance/100}}</view>
+	</view>
+	<view class="my-bill" wx:if='{{searchList.length > 0}}'>
+		<view class="my-bill-header"><text>账单记录</text></view>
+		<view class="my-bill-main">
+			<view class="my-bill-item" wx:for='{{searchList}}' wx:key='item.id'>
+				<view class="my-bill-item-type">
+					<text class='my-bill-recharge'>{{item.change_type_name}}</text>
+					<text class='my-bill-count'>{{item.seq_flag == 1 ? "-" : "+"}}￥{{item.amount/100}}</text>
+				</view>
+				<view class="my-bill-datetime">
+					<text class="my-bill-date">{{item.data}}</text>
+				</view>
+				<view class="my-bill-trunover">流水: {{item.trade_no}}</view>
+			</view>
+		</view>
+	</view>
+</view>

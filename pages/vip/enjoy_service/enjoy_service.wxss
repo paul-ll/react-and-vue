@@ -1,0 +1,92 @@
+.vipCon{
+	position: relative;
+}
+.bgimg{
+	width:100%;
+	height:100vh;
+}
+.iconCon{
+	height:100vh;
+	width:100%;
+	position: absolute;
+	top:0;
+	left:0;
+	z-index:1;
+	text-align: center;
+}
+.icon{
+	display:block;
+	width:85rpx;
+	height:85rpx;
+	margin:315rpx auto;
+	margin-bottom: 0rpx;
+	border-radius:50%;
+}
+.text{
+	font-size: 28rpx;
+}
+.vipFalg{
+	width:65rpx;
+	height:20rpx;
+	position: absolute;
+	top:415rpx;
+	left:410rpx;
+}
+.clickBotton{
+	width:690rpx;
+	height:75rpx;
+	line-height: 75rpx;
+	text-align: center;
+	color:#fff;
+	font-size: 28rpx;
+	position: absolute;
+	bottom:40rpx;
+	left:30rpx;
+	z-index:20;
+	background: #c28830;
+}
+.canNotClick{
+	background: #c6c6c6;
+}
+.bg{
+	background: rgba(0,0,0,0.6);
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom:0;
+	right:0;
+	z-index:10;
+	width:100%;
+}
+.dialogContent{
+	background:#fff;
+	width:620rpx;
+	height:400rpx;
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom:0;
+	right:0;
+	margin: auto;
+	border-radius: 10rpx;
+	text-align: center;
+	z-index:20;
+}
+.closeBtn {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 80rpx;
+	height: 80rpx;
+}
+.contentImage {
+	margin-top: 112rpx;
+	width: 128rpx;
+	height: 108rpx;
+}
+.contentDes {
+	color: #BB832E;
+	font-size: 32rpx;
+	margin-top: 22rpx;
+	margin-bottom: 112rpx;
+}

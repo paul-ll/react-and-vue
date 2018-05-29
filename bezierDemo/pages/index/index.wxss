@@ -1,6 +1,0 @@
-/**index.wxss**/
-canvas{
-  width: 750rpx;
-  height: 800rpx;
-  background: #eee; 
-}

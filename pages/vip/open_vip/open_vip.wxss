@@ -1,0 +1,259 @@
+.container {
+  padding-bottom: 120rpx;
+}
+
+image {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.header {
+  height: 242rpx;
+  /*默认背景颜色*/
+  background-image: linear-gradient(-90deg, #FF941F 0%, #ECAC42 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.header .portrait {
+  height: 140rpx;
+  width: 140rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+
+  position: relative;
+}
+.header .portrait image {
+  border-radius: 50%;
+  border: 2rpx solid white;
+  display: block;
+}
+
+.portrait .vip-level {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.user-info .nickname {
+  font-family: PingFangSC-Semibold;
+  font-size: 40rpx;
+  color: #FFFFFF;
+}
+.user-info .vip-sign {
+  width: 100rpx;
+  height: 30rpx;
+}
+.header .due-date {
+  position: absolute;
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  color: #FFFFFF;
+  bottom: 0;
+  right: 0;
+  height: 80rpx;
+  line-height: 80rpx;
+  padding-right: 30rpx;
+}
+
+
+.content {
+  padding: 0 30rpx;
+}
+
+.description {
+  height: 120rpx;
+  line-height: 120rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.description .title {
+  font-family: PingFangSC-Semibold;
+  font-size: 40rpx;
+  color: #474245;
+  letter-spacing: 0;
+  font-weight: bold;
+  margin-bottom: 12rpx;
+}
+.description .subtitle {
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #969696;
+  font-weight: normal;
+  text-indent: 0;
+}
+.description .subtitle text{
+  color: #FFAB65;
+  font-size: 30rpx;
+}
+
+
+.price-list {
+
+}
+.price-item {
+  height: 128rpx;
+  border: 1rpx solid #C6C6C6;
+  border-radius: 8rpx;
+  padding: 0 30rpx;
+
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.price-item.active {
+  background: #FFFAEF;
+  border: 2rpx solid #E7AB21;
+  border-radius: 4px;
+}
+
+.vip-desc, .vip-price {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.vip-desc {
+  width: 65%;
+}
+
+.vip-desc .title {
+  font-family: PingFangSC-Regular;
+  font-size: 32rpx;
+  color: #474245;
+}
+.vip-desc .title.subtitle {
+  font-size: 24rpx;
+  color: #969696;
+}
+.vip-desc .title.recommend {
+  display: flex;
+  align-items:center;
+}
+.vip-desc .title.recommend .recommend-icon {
+  width: 66rpx;
+  height: 34rpx;
+}
+.vip-desc .subtitle {
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #969696;
+}
+
+.vip-price .sale-price {
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #E7AB21;
+}
+.price-text{
+  font-size: 48rpx;
+}
+.money-sign{
+  font-size: 28rpx;
+}
+.vip-price .original-price {
+  color: #969696;
+  text-decoration: line-through;
+  text-align: right;
+}
+
+.vip-instruction {
+  display: flex;
+  justify-content: flex-end;
+  height: 28rpx;
+  align-items: center;
+}
+.vip-instruction .instruction-text {
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #969696;
+  letter-spacing: 0;
+  margin-right: 12rpx;
+  self-align: center;
+}
+.vip-instruction .instruction-icon {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.payment {
+
+}
+
+.paymen-amount {
+  height: 88rpx;
+  line-height: 88rpx;
+  font-family: .PingFang-SC-Medium;
+  font-size: 32rpx;
+  color: #262626;
+  font-weight: bold;
+}
+
+.pay-item {
+  height: 108rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2rpx solid #E6E6E6;
+  border-top: 2rpx solid #E6E6E6;
+}
+
+.pay-mode {
+  display: flex;
+  align-items: center;
+}
+
+.pay-mode .pay-icon {
+  width: 48rpx; 
+  height: 48rpx;
+  margin-right: 20rpx;
+}
+.pay-mode .pay-name {
+  font-family: .PingFang-SC-Regular;
+  font-size: 28rpx;
+  color: #262626;
+}
+
+.pay-mode-checked {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.open-vip-action {
+  height: 108rpx;
+  width:100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background: white;
+  box-shadow: inset 0 2rpx 0 0 #E6E6E6;
+}
+.open-vip-action button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 690rpx;
+  height: 80rpx;
+  color: white;
+  font-size: 32rpx;
+  line-height:80rpx;
+  background: #E7AB21;
+  border-radius: 4rpx;
+}
+button:after {
+  border: none;
+  outline: none;
+}

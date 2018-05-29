@@ -1,0 +1,299 @@
+<!--detail.wxml-->
+<import src="/utils/templates/wetoast/wetoast.wxml"/>
+<template is="wetoast" data="{{...__wetoast__}}"/>
+<import src="/utils/templates/loading/loading.wxml" />
+<template is="loading" wx:if='{{loading}}' />
+<import src="/utils/templates/no_data/no_data.wxml" />
+<template is="noData" data="{{...nodata}}" />
+<import src="/utils/templates/no_network/no_network.wxml"/>
+<template is="network" data="{{...network}}"/>
+<!-- 小神推事件抓取组件 -->
+<import src="../../template/template.wxml" />
+<template wx:if="{{!is_showHideBtn}}" is='hideBtn'data="{{hideBtnData}}"></template>
+<!-- 用户拒绝授权 -->
+<user_no_rule bind:haveRule="haveRule" wx:if='{{showNoAddressRules}}'></user_no_rule>
+	
+<view class="container" wx:if='{{haveData && !activeFail}}' >
+		
+	<!-- 背景图 -->
+	<image class="container_bg" src="{{imageHost}}/img_20180419003859287.jpg" mode="{{}}"></image>
+	<form bindsubmit="formSubmit" style="height:100%;" report-submit='true' class='{{content}}'>
+
+  <view class="products-section" style="height:100%;" >
+    <view class="products-scroll-view" style="height:100%;">
+			<!-- 新人开团,用户为新人且没有newuser -->
+			<view class="dialog-container {{transparent ? 'transparent' : ''}}" wx:if="{{isShowDialog}}">
+				<button class="black-mask" wx:if="{{isShowMask}}" catchtap="maskClick" formType="submit"></button>
+				<view class="dialog-body" catchtap="dialogClick">
+					<image class="dialog_body_img" src="{{imageHost}}/img_20180418170022098.png" mode="{{}}"></image>
+					<block wx:if="{{isJoinReq == 1}}">
+						<view wx:if="{{receiveProductCoupon}}" class="dialog_title">试吃领取成功</view>
+						<view wx:else class="dialog_title">优惠领取成功</view>
+						<view class="dialog_info">{{joinWindowDesc}}</view>
+					</block>
+					<block wx:if="{{isJoinReq == 0}}">
+						<view class="dialog_info dialog_title_top">{{openWindowDesc}}</view>
+					</block>
+					
+					<!-- 红包或者优惠券信息 -->
+					<view class="dialog_main" wx:if="{{receiveProductCoupon}}">
+						<image class="dialog_img" src="/images/red_zero.png" mode="{{}}"></image>	
+						<view class="dialog_img_flex">
+							<view class="dialog_img_pice">
+								<view class="coupon_cimg">
+									<image class="coupon_product_img" src="{{receiveProductCoupon.productCouponImg}}" mode="{{}}"></image>
+								</view>
+							</view>
+							<view class="dialog_img_right">
+								<view class="dialog_img_title">{{receiveProductCoupon.productCouponTitle}}</view>
+								<view class="dialog_img_last dialog_img_last_top"><text>{{receiveProductCoupon.productCouponDesc}}</text></view>
+								<view class="dialog_img_last"><text>{{receiveProductCoupon.productCouponExpire}}</text></view>
+							</view>
+						</view>	
+					</view>
+					<view class="dialog_main" wx:if="{{freeAssistCoupon}}">
+						<image class="dialog_img" src="/images/red_zero.png" mode="{{}}"></image>	
+						<view class="dialog_img_flex">
+							<view class="dialog_img_pice" >
+								<view class="dialog_img_left">¥</view>
+								<view class="dialog_img_left_right">{{freeAssistCoupon.couponPrice/100}}</view>	
+							</view>
+							<view class="dialog_img_right">
+								<view class="dialog_img_title">{{freeAssistCoupon.redTitle}}</view>
+								<view class="dialog_img_last dialog_img_last_top"><text>{{freeAssistCoupon.couponDesc}}</text></view>
+								<view class="dialog_img_last"><text>{{freeAssistCoupon.couponExpire}}</text></view>
+							</view>
+						</view>	
+					</view>
+					
+					<button wx:if="{{isJoinReq==0}}" class="dialog_use_block" catchtap="goIndex" data-type='bounced'  formType="submit">
+						<image class="index_button" src="{{imageHost}}/img_20180502162304738.gif" mode="{{}}"></image>
+					</button>
+					<button wx:if="{{isJoinReq==1}}" class="dialog_use_block" catchtap="goIndex"  formType="submit">
+						<image class="index_button" src="{{imageHost}}/img_20180502162304738.gif" mode="{{}}"></image>
+					</button>
+					
+					<view wx:if="{{isJoinReq==1 && freeAssistCoupon && receiveProductCoupon}}" class="dialog_use_des">红包和商品券可以同时使用</view>
+					<image class="close-dialog-btn" wx:if="{{hasCloseBtn}}" src="{{closeBtnImg || '/images/logout.png'}}" mode="widthFix" catchtap="closeBtnClick"></image>
+
+				</view>
+			</view>
+
+			<!-- 团地区≠个人地区，用户不为新人 -->
+		<!-- <block wx:if="{{isNewUser ==0 && status == 1 && isClickMore == 0}}">
+			<view class="dialog-container {{transparent ? 'transparent' : ''}}" wx:if="{{0}}">
+				<view class="black-mask" style="width:{{winWidth}}px;height:{{winheight}}px;" wx:if="{{isShowMask}}"></view>
+				<view class="dialog_older dialog_width" catchtap="dialogClick">
+					<image class="dialog_logo_img dialog_width_img" src="{{imageHost}}/img_20180421014945778.png" mode="{{}}"></image>
+					<view class="dialog_logo_text">该活动奖品不支持当前城市</view>
+					<button class="use_people dialog_button dialog_button_new" data-type='new' form-type='submit'>
+						<view >参与本地活动</view>
+					</button>
+				</view>
+			</view>
+		</block> -->
+		<!-- 规则弹窗 -->
+	<view class="dialog-container" wx:if="{{coverView}}">
+		<button class="black-mask" wx:if="{{isShowMask}}" catchtap="cancelPayBox" formType="submit"></button>
+		<view class="dialog-body dialog-body-bg" >
+			<image class="activity_rule" src="{{activityRule}}" mode="{{}}"></image>
+			<!-- <view class="pay-title">活动规则</view>
+			<view class="pay-text">
+				<view class="pay-text-list">
+					1. 每个用户都可参与活动，分享邀请对应数量的优鲜新用户点赞，即可获得0元商品券。
+				</view> 
+				<view class="pay-text-list">
+					2. 仅新用户才能点赞，且在活动期间仅可点赞一次。
+				</view> 
+				<view class="pay-text-list">
+					3. 商品券可用于在每日优鲜商城购买时使用，每笔订单仅限使用一张商品券，可与红包同时使用。收到券后请及时使用，避免过期。
+				</view> 
+				<view class="pay-text-list">
+					4. 每个助力团有对应的有效期，如到有效期仍未邀请对应数量的新用户的点赞，则本次助力团失败，无法获得对应的奖品。
+				</view> 
+			</view> -->
+			<image class="close-dialog-btn" wx:if="{{hasCloseBtn}}" src="{{closeBtnImg || '/images/logout.png'}}" mode="widthFix" catchtap="cancelPayBox"></image>
+		</view>
+	</view>
+
+		
+	<!-- 顶部规则和广告 -->
+	<view class="top_flex">
+		<image class="top_left_img" src="/images/tencent.png" mode="{{}}"></image>
+		<view class="active_rule" bindtap="showRoule">
+			<image class="active_rule_bg" src="/images/active_rule_bg.png" mode="{{}}"></image>
+			<view  class="active_rule_info">活动规则</view>
+		</view>
+	</view>
+	<!-- =======消息轮播======= -->
+	
+	
+	<view class="detail-section"> 
+		<view wx:for='{{joinUser}}' wx:key='item' animation='{{item.animation}}' class='detail_pow'> 
+			<image src="/images/swiper_bg.png" class="slide-detail-image" mode=""/>
+			<view class="swiper_text"><text class="user_name">{{item.nickName}}</text>免费获得{{productName}}</view>
+		</view>
+	</view>
+	
+
+        
+    <!--活动主题信息-->
+    <view class="event_main" >
+		<view class="zero_body">
+			<image class="event_main_bgimg" style="height:650rpx" src="{{imageHost}}/img_20180419003930472.png" mode="{{}}"></image>
+			<view class="zero_body_main">
+				<image class="zero_body_icon" src="{{userHeadImg}}" mode="{{}}"></image>
+				<view class="join_img_name">{{userNickName}}</view>
+				<view wx:if="{{isJoinReq==0 && status == 1}}" class="zero_body_title">{{activityTitle}}</view>
+				<view wx:if="{{isJoinReq==0 && status == 3}}" class="zero_body_title">很抱歉，邀请人数还差一点</view>
+				<view wx:if="{{isJoinReq==0 && status == 2}}" class="zero_body_title">恭喜你！成功获得了{{productName}}</view>
+				<view wx:if="{{isJoinReq==1}}" class="zero_body_title">{{receiveTitle}}</view>
+				<view class="zero_body_product" bindtap="{{status == 1?'chooseProduct':''}}">
+					<image class="zero_body_bg" wx:if="{{status == 1}}"  src="/images/product_info.png" mode="{{}}"></image>
+					<image class="zero_body_bg zero_body_bg_fail" wx:if="{{status == 2}}"  src="/images/product_info_success.png" mode="{{}}"></image>
+					<image class="zero_body_bg zero_body_bg_fail" wx:if="{{status == 3}}"  src="/images/product_info_fail.png" mode="{{}}"></image>
+					<view class="zero_body_info {{status == 3 ? 'zero_opticy':''}}">
+						<view class="power_products_img">
+							<image class="power_products_img_icon" src="{{productPic}}" mode="{{}}"></image>
+						</view>
+						<view class="zero_body_right">
+							<view wx:if="{{status == 1}}" class="zero_body_name">{{productTitle}}</view>
+							<view wx:if="{{status == 2 || status == 3}}" class="zero_body_name">{{productName}}</view>
+							
+							<view wx:if="{{status == 1}}" class="zero_body_pice">
+								<view class="zero_body_left">¥</view>
+								<view class="zero_body_left_right">{{productPrice/100}}</view>		
+							</view>
+							<view wx:if="{{status == 2 || status == 3}}" class="zero_body_text">
+								<view class="zero_body_ticket">
+									<view class="dialog_img_last dialog_img_last_top"><text>{{productCouponDesc}}</text></view>
+									<view class="dialog_img_last"><text>{{productCouponExpire}}</text></view>	
+								</view>		
+							</view>
+						</view>
+					</view>
+					<view wx:if="{{status == 1}}" class="zero_body_right_text">限量{{successNum}}份，先到先得</view>
+				</view>
+				<view wx:if="{{status == 1 && regionName}}" class="zero_body_last">— {{regionName}} —</view>
+				<view wx:if="{{status == 2}}" class="zero_body_last zero_body_success">商品券已放入您的每日优鲜账户哦~</view>
+				<view wx:if="{{status == 3}}" class="zero_body_last zero_body_success">未在活动时间内获得足够好友加入，无法免费试吃</view>
+			</view>
+		</view>
+			
+		<!-- 参团者头像 -->
+	<block wx:if="{{status == 1 || (status == 2 && isJoinReq == 1)}}" >
+		<view class="new_people_img" >
+			<view class="margin_img"  wx:for="{{freeAssistMember}}" wx:for-item="itemimg" wx:key="item-index"> 
+				<!-- <image class="new_people_icon"  src="/images/zero_power_icon.png" mode="{{}}"></image> -->
+				<image class="new_people_icon" src='{{itemimg.userHeadImg || "/images/new_user_icon.png"}}'></image>
+			</view>
+		</view>
+	
+		<!-- 倒计时 -->
+		<view class="time_main">
+			<view class="time_flex">
+				<text class="time_flex_text">距离结束</text>
+				<view class="time_flex_position">
+					<image class="time_bg" src="/images/zero_time.png" mode="{{}}"></image>
+					<view wx:if="{{status == 2}}" class="time_text">00</view>
+					<view wx:else class="time_text">{{hr}}</view>
+				</view>
+				<text class="time_center">:</text>
+				<view class="time_flex_position">
+					<image class="time_bg" src="/images/zero_time.png" mode="{{}}"></image>
+					<view wx:if="{{status == 2}}" class="time_text">00</view>
+					<view wx:else class="time_text">{{min}}</view>
+				</view>
+				<text class="time_center">:</text>
+				<view class="time_flex_position">
+					<image class="time_bg" src="/images/zero_time.png" mode="{{}}"></image>
+					<view wx:if="{{status == 2}}" class="time_text">00</view>
+					<view wx:else  class="time_text">{{sec}}</view>	
+				</view>
+				<text class="time_center">:</text>
+				<view class="time_flex_position time_flex_position_sec">
+					<image class="time_bg time_bg_sec" src="/images/zero_time_last.png" mode="{{}}"></image>
+					<view wx:if="{{status == 2}}" class="time_text">0</view>
+					<view wx:else  class="time_text time_text_sec">{{micro_sec}}</view>	
+				</view>
+			</view>					
+		</view>
+		<view class="new_limit">
+			<view class="">(仅限每日优鲜</view>
+			<view class="new_people_limit">新用户</view>
+			<view class="">哦）</view>
+		</view>
+	</block>
+	</view>
+		<!-- button -->
+		<view class="event_info">
+			<block wx:if="{{assistCode}}">	
+			<!-- 进行中 -->
+				<!-- 评团中 -->
+				<block wx:if="{{status == 1}}" >
+					
+				<!-- 发起者 -->
+					<block wx:if="{{isJoinReq == 0}}" >
+						<view class="use_people zero_power_fail" wx:if="{{endTimeText}}">
+							活动结束
+						</view>	
+						<button wx:if="{{!endTimeText}}" class="use_people" open-type='share' data-type='share' formType="submit">
+							<image class="use_people_img" src="{{imageHost}}/img_20180502162351384.gif" mode="{{}}"></image>
+						</button>	
+					</block>
+					<block wx:if="{{isJoinReq == 1 }}" >
+						<!-- 查看我的活动进展 -->
+						<button class="use_people" data-type='open' formType="submit">
+							<image class="use_people_img" src="{{imageHost}}/img_20180502161933950.gif" mode="{{}}"></image>
+						</button>
+					</block>
+					<button catchtap="goIndex" data-type='join' class="zero_index_flex" formType="submit">
+						<view class="zero_go_index">商城逛逛</view >
+						<image class="zero_index_img" src="/images/go_index.png" mode="{{}}"></image>
+					</button>
+				
+			</block>
+			<!-- 拼团成功，成团 -->
+			<block wx:if="{{status == 2}}">
+				<!-- 发起者 -->
+				<button wx:if="{{isJoinReq == 1}}"  data-type='open' class="use_people" formType="submit">
+					<image class="use_people_img" src="{{imageHost}}/img_20180502161933950.gif" mode="{{}}"></image>
+				</button>
+
+				<button wx:if="{{isJoinReq == 0 && isNewUser == 0}}" class="use_people" data-draw='draw' data-type='new' formType="submit">
+					<image class="use_people_img" src="{{imageHost}}/img_20180502162318764.gif" mode="{{}}"></image>
+				</button>
+
+				<button wx:if="{{isJoinReq == 0 && isNewUser == 1}}" class="use_people" data-type='success' catchtap="goIndex" formType="submit">
+					<image class="use_people_img" src="{{imageHost}}/img_20180502162304738.gif" mode="{{}}"></image>
+				</button>
+				<view wx:if="{{isNewUser == 1}}" class="dialog_use_success">红包和商品券可以同时使用</view>
+				<button catchtap="goIndex" data-type='join' class="zero_index_flex" formType="submit">
+					<view  class="zero_go_index" >商城逛逛</view>
+					<image class="zero_index_img" src="/images/go_index.png" mode="{{}}"></image>
+				</button>
+			</block>
+			
+			<!-- 拼团失败 -->
+				<block wx:if="{{status == 3}}" >
+					<button class="use_people" data-try='try'  data-type='new' formType="submit">
+						<image class="use_people_img" src="{{imageHost}}/img_20180418170050663.gif" mode="{{}}"></image>
+					</button>
+					<button catchtap="goIndex" data-type='join' class="zero_index_flex" formType="submit">
+						<view class="zero_go_index" >商城逛逛</view>
+						<image class="zero_index_img" src="/images/go_index.png" mode="{{}}"></image>
+					</button>>
+				</block>
+			</block>
+		</view>
+	<!-- 点赞规则 -->
+    </view>
+</view>
+	
+	</form>
+</view>
+<view class="page_flex" wx:if="{{activeFail}}" >
+	<image src="/images/zero_no_active.png" class="slide_flex_image" mode="aspectFit"/>
+	<view class="slide_flex_text">当前地区暂无活动哦</view>
+	<view catchtap="goIndex" data-type='join' class="slide_go_index">要不去商城逛逛</view>
+</view>

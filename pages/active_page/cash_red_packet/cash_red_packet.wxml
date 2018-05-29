@@ -1,0 +1,389 @@
+<import src="/utils/templates/wetoast/wetoast.wxml" />
+<import src="/utils/templates/no_network/no_network.wxml" />
+<import src="/utils/templates/loading/loading.wxml" />
+<import src="/utils/templates/no_data/no_data.wxml" />
+<import src="/utils/templates/product_item/product_item.wxml" />
+
+
+<template is="wetoast" data="{{...__wetoast__}}" />
+<template is="network" data="{{...network}}" />
+<template is="noData" data="{{...nodata}}" />
+<template is="loading" wx:if='{{loading}}' />
+
+<user_no_rule bind:haveRule="haveRule" wx:if='{{showNoRules}}'></user_no_rule>
+<loading hidden="{{loadingHidden}}">加载中...</loading>
+<view class='page' wx:if='{{showPage=="commander"}}'>
+  <!--底图 -->
+  <view class='content'>
+    <!--红包  -->
+    <image class='redPacket' mode='widthFix' src='https://j-image.missfresh.cn/img_20180412150325075.png'>
+    </image>
+    <view class='explainView' bindtap='showExplain'>
+      <image class='explainImg' src='/images/cash-explain.png'></image>
+    </view>
+
+    <view wx:if='{{cashGroupon==null}}' class='contentError'>
+      <text> 来晚了\n活动已结束 </text>
+    </view>
+    <view wx:else class='contentPrice'>
+      <view>
+        <text>{{cashGroupon.isExtract==1?'已提现':'已拆得'}}</text>
+        <text class='priceNum'>{{cashGroupon.grouponAmount/100.0}}</text>
+        <text>元</text>
+      </view>
+      <image class='withDraw' src='/images/withdraw.png' bindtap='withDrawAction' data-type='bottom'></image>
+    </view>
+    <image wx:if='{{cashGroupon.status==1}}' class='btnOneImg' src='/images/cash-big-btn.png'>
+      <form bindsubmit="ShareSubmit" report-submit='true'>
+        <button class='btnOne' open-type='share' formType="submit" data-type='bottom'>
+          <image class='priceImg' src='/images/cash.gif'></image>
+          <view class='btnOneText'>发给好友帮我拆</view>
+        </button>
+      </form>
+    </image>
+    <!--团已结束 & 没有到达开团上限  & 已提现或者没有到达提现门槛 & 活动没有结束  -->
+    <image wx:elif='{{cashGroupon.status!=1&&isExceedOpenLimit==0&&(cashGroupon.isExtract==1||cashGroupon.extractStatus==0)&&isActivity!=0}}' class='btnOneImg' src='/images/cash-big-btn.png'>
+      <form bindsubmit="openGroup" report-submit='true'>
+        <button class='btnOne' formType="submit" data-type='bottom'>
+          <image class='bouncePriceImg' src='/images/cash.gif'></image>
+          <view class='bounceBtnOneText'>{{cashGroupon.isExtract==1?"再领一个现金红包":"领一个现金红包"}}</view>
+        </button>
+      </form>
+    </image>
+    <!--团已结束 & 没有到达开团上限  & 到达提现门槛 & 没有提现 & 活动没有结束  -->
+    <image wx:elif='{{cashGroupon.status!=1&&isExceedOpenLimit==0&&cashGroupon.extractStatus!=0&&cashGroupon.isExtract==0&&isActivity!=0}}' class='btnOneImg' src='/images/cash-big-btn-gray.png'>
+      <button class='btnOne' bindtap='shareAction'>
+        <image class='priceImg packetGray' src='/images/cash-packet.png'></image>
+        <view class='btnOneText' style='color: #B0B0B0;'>发给好友帮我拆</view>
+      </button>
+    </image>
+    <image wx:else class='btnOneImg' src='/images/cash-big-btn.png'>
+      <button class='btnOne' data-type='bottom' bindtap='goIndex'>
+        <view class='bounceBtnOneText'>去商城逛逛</view>
+      </button>
+    </image>
+    <view wx:if="{{cashGroupon}}" class='lastTime'>
+      <image class='time' src='/images/time-red.png'>
+        <view class='timeContent'>{{hour}}</view>
+      </image>
+      <view class='colon'>:</view>
+      <image class='time' src='/images/time-red.png'>
+        <view class='timeContent'>{{min}}</view>
+      </image>
+      <view class='colon'>:</view>
+      <image class='time' src='/images/time-red.png'>
+        <view class='timeContent'>{{second}}</view>
+      </image>
+      <view class='colon'>:</view>
+      <image class='timeSmall' src='/images/time-red-small.png'>
+        <view class='timeContent'>{{colon}}</view>
+      </image>
+      <view class='alert'>{{alert}}</view>
+    </view>
+    <view class='joinPersonList'>
+      <view class='joinPersonItem' wx:for='{{grouponMemberList}}' wx:key="item ">
+        <view class='joinImgAndName'>
+          <image class='userHeader' src='{{item.userHeadImg}}'></image>
+          <view>{{item.userNickName}}</view>
+        </view>
+        <view class='sharePrice'>
+          帮你拆了￥{{item.openMoney/100.0}}
+        </view>
+      </view>
+    </view>
+    <view class='more' bindtap='showMore' wx:if='{{grouponMemberListCount>3}}'>查看更多</view>
+  </view>
+</view>
+
+
+<view class="bounced" bindtap="closeBounced" hidden='{{!showBounce}}'>
+  <image class='bouncedCloseImg' src='/images/cash-close-white.png'></image>
+  <view wx:if='{{cashGroupon.isExtract==1}}' class='extractTitle'>
+    现金已通过微信打款到账，请注意查收
+  </view>
+  <image class='bouncedImg' src='https://j-image.missfresh.cn/img_20180413151931916.png'>
+    <view class='bouncedContent' catchtap='bounced'>
+      <!--开团中  -->
+      <view wx:if='{{cashGroupon.status==1}}'>
+        <!--未到达门槛  -->
+        <view wx:if='{{cashGroupon.extractStatus==0}}'>
+          <view class='bounceTitleTwo'>
+            拆得{{cashGroupon.grouponAmount/100.0}}元现金
+          </view>
+          <view class='extractAmount'>
+            还差
+            <text class='extractPrice'>{{(cashGroupon.extractAmount-cashGroupon.grouponAmount)/100.0}}</text>元可提现
+          </view>
+          <view class='bounceLastTime'>
+            <view style='margin-right:15rpx'>红包有效期剩余</view>
+            <image class='time' src='/images/time-black.png'>
+              <view class='timeContent'>{{hour}}</view>
+            </image>
+            <view class='colon'>:</view>
+            <image class='time' src='/images/time-black.png'>
+              <view class='timeContent'>{{min}}</view>
+            </image>
+            <view class='colon'>:</view>
+            <image class='time' src='/images/time-black.png'>
+              <view class='timeContent'>{{second}}</view>
+            </image>
+            <view class='colon'>:</view>
+            <image class='timeSmall' src='/images/time-black-small.png'>
+              <view class='timeContent'>{{colon}}</view>
+            </image>
+          </view>
+          <image class='bounceBtnOneImg' src='/images/cash-small-btn.png'>
+            <form bindsubmit="ShareSubmit" report-submit='true'>
+              <button class='bounceBtnOne' open-type='share' formType="submit" data-type='bounce'>
+                <image class='bouncePriceImg' src='/images/cash.gif'></image>
+                <view class='bounceBtnOneText'>发给好友帮我拆</view>
+              </button>
+            </form>
+          </image>
+        </view>
+        <!--到门槛  -->
+        <view wx:else>
+          <view class='bounceTitleThree'>拆得
+            <text class='popPrice'>{{cashGroupon.grouponAmount/100.0}}</text>元现金
+          </view>
+          <view class='maxPrice'>最高可领取100元</view>
+          <view class='bounceLastTime' style='margin-top:5rpx'>
+            <view style='margin-right:15rpx'>红包有效期剩余</view>
+            <image class='time' src='/images/time-black.png'>
+              <view class='timeContent'>{{hour}}</view>
+            </image>
+            <view class='colon'>:</view>
+            <image class='time' src='/images/time-black.png'>
+              <view class='timeContent'>{{min}}</view>
+            </image>
+            <view class='colon'>:</view>
+            <image class='time' src='/images/time-black.png'>
+              <view class='timeContent'>{{second}}</view>
+            </image>
+            <view class='colon'>:</view>
+            <image class='timeSmall' src='/images/time-black-small.png'>
+              <view class='timeContent'>{{colon}}</view>
+            </image>
+          </view>
+          <image class='bounceBtnOneImg' src='/images/cash-small-btn.png'>
+            <form bindsubmit="ShareSubmit" report-submit='true'>
+              <button class='bounceBtnOne' open-type='share' formType="submit" data-type='bounce'>
+                <image class='bouncePriceImg' src='/images/cash.gif'></image>
+                <view class='bounceBtnOneText'>发给好友帮我拆</view>
+              </button>
+            </form>
+          </image>
+          <view class='bounceGoShop' bindtap='withDrawAction' data-type='bounce'>去提现</view>
+        </view>
+      </view>
+      <!--团已结束  -->
+      <view wx:else>
+        <view wx:if='{{cashGroupon.extractStatus!=0&&cashGroupon.isExtract==0}}' class='bounceTitleThree'>拆得
+          <text class='popPrice'>{{cashGroupon.grouponAmount/100.0}}</text>元现金
+        </view>
+        <view wx:elif='{{cashGroupon.isExtract==1}}' class='bounceTitleThree'>
+          <text class='popPrice'>{{cashGroupon.grouponAmount/100.0}}</text>元
+        </view>
+        <view wx:elif='{{cashGroupon.isExtract==0}}' class='bounceTitleThree'>
+          拆得
+          <text class='popPrice'>{{cashGroupon.grouponAmount/100.0}}</text>元
+        </view>
+        <view class='endText'>
+          <text>{{groupEnd}}</text>
+        </view>
+        <!--可提现，未提现  -->
+        <image wx:if='{{cashGroupon.extractStatus!=0&&cashGroupon.isExtract==0}}' class='bounceBtnOneImg' src='/images/cash-small-btn.png'>
+          <button class='bounceBtnOne' bindtap='withDrawAction' data-type='bounce'>
+            <image class='bouncePriceImg' src='/images/cash.gif'></image>
+            <view class='bounceBtnOneText'>去提现</view>
+          </button>
+        </image>
+        <image wx:elif='{{cashGroupon.isExtract==1&&isExceedOpenLimit==0}}' class='bounceBtnOneImg' src='/images/cash-small-btn.png'>
+          <form bindsubmit="openGroup" report-submit='true'>
+            <button class='bounceBtnOne' formType="submit" data-type='bounce'>
+              <image class='bouncePriceImg' src='/images/cash.gif'></image>
+              <view class='bounceBtnOneText'>立即领取</view>
+            </button>
+          </form>
+        </image>
+        <image wx:elif='{{cashGroupon.isExtract==0&&isExceedOpenLimit==0}}' class='bounceBtnOneImg' src='/images/cash-small-btn.png'>
+          <form bindsubmit="openGroup" report-submit='true'>
+            <button class='bounceBtnOne' formType="submit" data-type='bounce'>
+              <image class='bouncePriceImg' src='/images/cash.gif'></image>
+              <view class='bounceBtnOneText'>领一个现金红包</view>
+            </button>
+          </form>
+        </image>
+        <image wx:elif='{{isExceedOpenLimit!=0}}' class='bounceBtnOneImg' src='/images/cash-small-btn.png'>
+          <button class='bounceBtnOne' bindtap='goIndex' data-type='bounce'>
+            <view class='bounceBtnOneText'>去商城逛逛</view>
+          </button>
+        </image>
+      </view>
+    </view>
+  </image>
+</view>
+
+<!-- 更多  -->
+<view class='bouncedMore' hidden='{{!showMore}}' bindtap='closeMore'>
+  <view class='personMore'>
+    <image class='grayClose' src='/images/cash-close-gray.png'></image>
+    <scroll-view class='bouncedMoreList' scroll-y>
+      <view class='joinPersonItem' wx:for='{{moreGrouponMemberList}}' wx:key="item">
+        <view class='joinImgAndName'>
+          <image class='userHeader' src='{{item.userHeadImg}}'></image>
+          <view class='bounceJoinName'>{{item.userNickName}}</view>
+        </view>
+        <view class='bounceSharePrice'>
+          帮你拆了
+          <text style='color: #F59FC1;'>￥{{item.openMoney/100.0}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<!--新人，团员，没有领过红包  -->
+<scroll-view wx:if='{{showPage=="new"}}' scroll-y class='newBg'>
+  <image class='shareBgImg' mode='widthFix' src='https://j-image.missfresh.cn/img_20180419145944985.png'>
+    <view class='shareContent'>
+      <view class='shareTitle' wx:if='{{grouponMember.joinStatus!=0}}'>
+        <text>{{grouponMember.message}}</text>
+      </view>
+      <view wx:else class='shareTitle'>
+        您已成功帮好友拆得{{grouponMember.openMoney/100.0}}元
+      </view>
+      <view class='shareSubTitle'>恭喜获得新人专享礼遇</view>
+      <view class='coupons'>{{redPacketDetail.redTitle}}</view>
+      <image class='newBtnOneImg' src='https://j-image.missfresh.cn/img_20180423144934589.gif' data-type='new' bindtap='goIndex'></image>
+    </view>
+  </image>
+</scroll-view>
+
+
+<!--团员  -->
+<scroll-view wx:if='{{showPage=="noCommander"}}' scroll-y class='sharePage'>
+  <image class='oldTop' mode='widthFix' src='https://j-image.missfresh.cn/img_20180412150345344.png'></image>
+  <image class='shareBgImg' mode='widthFix' src='https://j-image.missfresh.cn/img_20180423141531658.png'>
+    <view class='shareContent'>
+      <view class='joinTitle' wx:if='{{grouponMember.joinStatus!=0}}'>
+        <text>{{grouponMember.message}}</text>
+      </view>
+      <view wx:else class='joinTitle'>
+        <text>您已成功帮好友拆得:\n{{grouponMember.openMoney/100.0}}元</text>
+      </view>
+      <!--活动进行中，可以开团  -->
+      <view wx:if='{{isActivity==1&&isExceedOpenLimit==0||haveGroupOn==1}}'>
+        <view class='joinSubTitle'>
+          <text>送你最高\n<text style='color:#FFF0B1'>100</text>元现金红包</text>
+        </view>
+        <image class='joinBtnOneImg' src='/images/cash-new-btn.png'>
+          <form bindsubmit="openGroup" report-submit='true'>
+            <button class='shareBtnOne' formType="submit" data-type='join'>
+              <image class='bouncePriceImg' src='/images/cash.gif'></image>
+              <view style='margin-left:10rpx'>立即领取</view>
+            </button>
+          </form>
+        </image>
+      </view>
+      <!--活动结束  -->
+      <view wx:else>
+        <view class='joinSubTitleTwo'>
+          <text>商城今天有新品到货\n快去逛逛吧~</text>
+        </view>
+        <image class='joinBtnOneImg' src='/images/cash-new-btn.png' bindtap='goIndex'>
+          <view class='shareBtnOne'>
+            <view style='margin-left:10rpx'>去商城逛逛</view>
+          </view>
+        </image>
+      </view>
+    </view>
+  </image>
+</scroll-view>
+
+<!-- 帮拆引导页  -->
+<scroll-view wx:if='{{showPage=="guideJoin"}}' scroll-y class='sharePage'>
+  <image class='oldTop' mode='widthFix' src='https://j-image.missfresh.cn/img_20180412150345344.png'></image>
+  <image class='shareBgImg' mode='widthFix' src='https://j-image.missfresh.cn/img_20180423141531658.png'>
+    <view class='shareContent'>
+      <view class='joinTitle'>
+      </view>
+      <view class='joinSubTitleThree'>
+        <text>帮TA拆红包吧\n你也能获得最高<text style='color:#FFF0B1;font-size:65rpx'>100</text>元现金</text>
+      </view>
+      <image class='joinBtnOneImg' src='/images/cash-new-btn.png'>
+        <button class='shareBtnOne' bindtap='joinAction'>
+          <image class='bouncePriceImg' src='/images/cash.gif'></image>
+          <view style='margin-left:10rpx'>帮他拆 领现金</view>
+        </button>
+      </image>
+    </view>
+  </image>
+</scroll-view>
+
+
+<!-- 开团引导页  -->
+<scroll-view wx:if='{{showPage=="guideOpen"}}' scroll-y class='sharePage'>
+  <image class='openTop' src='https://j-image.missfresh.cn/img_20180416162444501.png'>
+    <view class='openTopText'>你有一个现金红包未领取</view>
+  </image>
+  <image class='guideBgImg' mode='widthFix' src='https://j-image.missfresh.cn/img_20180419145933937.png'>
+    <view class='guideContent'>
+      <view class='guideTitle'>
+        <text>最高\n<text style='font-size:70rpx;font-weight: bolder;'>100元现金</text></text>
+      </view>f
+      <form bindsubmit="openGroup" report-submit='true'>
+        <image class='guideBtnOneImg' src='/images/cash-new-btn.png'>
+          <button class='shareBtnOne' formType="submit" data-type='guide'>
+            立即领取
+          </button>
+        </image>
+      </form>
+    </view>
+  </image>
+</scroll-view>
+
+
+<!--引导下载app  -->
+<view class="bounced" bindtap="closeShowApp" hidden='{{!showApp}}'>
+  <image class='bouncedCloseImg' src='/images/cash-close-white.png'></image>
+  <image class='bouncedImg' src='https://j-image.missfresh.cn/img_20180413151931916.png'>
+    <view class='bouncedContent' catchtap='bounced'>
+      <view class='appTitle'>
+        <text>下载每日优鲜App\n才可提现哦~</text>
+      </view>
+      <image class='appImg' src='https://j-image.missfresh.cn/img_20180416153820440.png'></image>
+      <image class='appBtnOneImg' src='/images/cash-small-btn.png'>
+        <button class='bounceBtnOne' data-type='bounce' bindtap='closeShowApp'>
+          <view class='bounceBtnOneText'>知道了</view>
+        </button>
+      </image>
+    </view>
+  </image>
+</view>
+
+<view class='bouncedexplain' hidden='{{!showExplain}}' bindtap='closeExlain'>
+  <image class='bouncedExplainImg' mode='widthFix' src='{{ruleImg}}'>
+    <image class='grayClose' src='/images/cash-close-gray.png'></image>
+  </image>
+</view>
+
+<view wx:if='{{goodsLoading}}' class="load-more-product">
+  <image class="load-more-gif" src="/images/cash-loading.gif"></image>
+  <text class="load-more-text">正在加载...</text>
+</view>
+
+<!--商品列表  -->
+<view class='{{isCommander==0&&isNewUser==1&&isGetRed==0?"newGoodsBg":""}}'>
+  <view wx:if='{{(isCommander==1||isCommander==0&&isNewUser==1&&isGetRed==0)&&sku_list.length>0}}' class='goods'>
+    <view class='moreTop'>
+      <view class='moreLine'></view>
+      <view class='moreText'>现金拿去花</view>
+      <view class='moreLine'></view>
+    </view>
+    <view wx:for="{{sku_list}}" wx:for-item="product" wx:for-index="productIndex" wx:key="{{product.sku}}" data-sku="{{product.sku}}">
+      <template is="product-item" data="{{product, productIndex, clickBanner, productFromCartInfos, subscribeArrivalRemind, chooseProduct, promotionTagWidth: promotionTags[productIndex].width, priceTagUrl: miniStartInfo && miniStartInfo.priceTag, priceTagWidth, getPriceTagWidth}}"
+      />
+    </view>
+  </view>
+</view>

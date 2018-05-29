@@ -1,0 +1,68 @@
+.showSwiper{
+  overflow: hidden;
+  box-sizing: border-box;
+  padding:30rpx 0;
+}
+
+.showSwiperList {
+  height: 270px;
+}
+.swiperItem {
+  float: left; 
+}
+.swiperItemImg{
+  width:100%;
+  height:100%;
+}
+.iconCon {
+  display:inline-block;
+  width: 150rpx;
+  height: 180rpx;
+  text-align: center;
+  line-height: 260rpx;
+  font-size: 10rpx;
+  position: relative;
+}
+.firstChild{
+  margin-left: 30rpx;
+}
+.icon{
+  position: absolute;
+  top:30rpx;
+  left:45rpx;
+  height:72rpx;
+  width:72rpx;
+}
+.iconSelect{
+  position: absolute;
+  top:20rpx;
+  left:33rpx;
+  height:84rpx;
+  width:84rpx;
+}
+.selectText{
+  color:#F69C0B ;
+  font-size:28rpx;
+}
+.iconText{
+  font-size:24rpx;
+}
+.container {
+  position: absolute;
+  bottom:0;
+  height: 180rpx;
+  min-width: 750rpx;
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+}
+.loading {
+  height: 90rpx;
+  width: 204rpx;
+  position: absolute;
+  top: 500rpx;
+  left: 50%;
+  margin-left: -51px;
+}

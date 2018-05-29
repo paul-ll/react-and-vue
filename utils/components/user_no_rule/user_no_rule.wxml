@@ -1,0 +1,7 @@
+<view class="no-address-rule-container">
+  <view class="no-address-middle-container">
+    <image class="no-address-image" src="/images/icon_no_address.png"></image>
+    <view class="no-address-text">您未开通权限，部分功能无法正常使用，请先开通权限～</view>
+    <view class="no-address-open-rule" bindtap="openRule">开通权限</view>
+  </view>
+</view>

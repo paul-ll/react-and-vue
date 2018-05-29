@@ -1,0 +1,47 @@
+<import src="/utils/templates/wetoast/wetoast.wxml"/>
+<import src="/utils/templates/loading/loading.wxml" />
+<template is="loading" wx:if='{{loading}}' />
+<import src="/utils/templates/no_network/no_network.wxml"/>
+<template is="network" data="{{...network}}"/>
+<import src="/utils/templates/no_data/no_data.wxml" />
+<template is="noData" data="{{...nodata}}" />
+
+<!-- 用户拒绝授权 -->
+<user_no_rule  bind:haveRule="haveRule" wx:if='{{showNoAddressRules}}'></user_no_rule>
+
+<view class="container {{can_invite==1 ? 'can-invite' : ''}}" wx:if="{{!network.noNetwork && !nodata.noData && !showNoAddressRules}}">
+  <!-- 上方优享会员特权背景图 -->
+  <view class="vip-privilege-bg">
+    <image src="{{card_img}}" bindload="onBGImgLoaded" binderror="onBGImgLoadError" />
+  </view>
+
+  <!-- 邀请好友区域 -->
+  <view class="invitation-container">
+    <view class="invite-num">{{invite_doc}}</view> 
+    <view class="invited-friends">
+      <block wx:if="{{my_invites}}">
+        <view class="friend-info" wx:for="{{my_invites}}" wx:for-index="idx" wx:for-item="friend" wx:key="head_icon">
+          <view class="portrait invited">
+            <image src="{{friend.head_icon}}" />
+          </view>
+          <view class="nickname">{{friend.nick_name}}</view>
+        </view>
+      </block>
+      <block wx:if="{{can_invite == 1}}">
+        <view class="friend-info"  wx:for="{{invite_num}}" wx:key="*this">
+          <view class="portrait">
+            <!-- type:1 表示点击带邀请按钮 -->
+            <button hover-class="none" open-type="share" data-type="1" bindtap="onInviteBtnTap">
+              <image src="/images/to_be_vip.png" />
+            </button>
+          </view>
+          <view class="nickname inviting-text">待邀请</view>
+        </view>
+      </block>
+    </view>
+    <view class="invite-action" wx:if="{{can_invite == 1}}">
+      <!-- type:2 表示点击下方的邀请好友体验按钮 -->
+      <button open-type="share" data-type="2" bindtap="onInviteBtnTap">邀请好友共享专属服务</button>
+    </view>
+  </view>
+</view>

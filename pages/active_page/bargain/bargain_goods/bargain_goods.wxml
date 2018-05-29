@@ -1,0 +1,80 @@
+<!-- 砍价商品页面 -->
+<import src="/utils/templates/no_data/no_data.wxml" />
+<!-- Toast -->
+<import src="/utils/templates/wetoast/wetoast.wxml"/>
+<template is="wetoast" data="{{...__wetoast__}}"/>
+<import src="/utils/templates/loading/loading.wxml" />
+<template is="loading" wx:if='{{loading}}' />
+<import src="/utils/templates/no_network/no_network.wxml"/>
+<template is="network" data="{{...network}}"/>
+<template is="noData" data="{{...nodata}}" />
+
+<!-- 用户拒绝授权 -->
+<user_no_rule  bind:haveRule="haveRule" bind:noRule="noRule" wx:if='{{showNoAddressRules}}'></user_no_rule>
+
+<view class="container" wx:if="{{!nodata.noData && !network.noNetwork && !showNoAddressRules}}">
+  <!-- 有宝刀提示条 -->
+  <view class="knife-tip" wx:if="{{warningMsg}}">{{warningMsg}}</view>
+  
+  <!-- 一、砍价商品 -->
+  <view class="goods-list-container" hidden="{{currentTab != 2}}">
+    <!-- 1. 顶部Banner -->
+    <view class="banners-swiper-container"  wx:if="{{bannerList && bannerList.length}}">
+      <swiper bindchange="onBannerChange" interval="5000" duration="750" autoplay="true" class='banners-swiper'>
+        <block wx:for="{{bannerList}}" wx:for-item="banner" wx:key="{{path}}">
+          <swiper-item catchtap="onBannerTap" data-link="{{banner.link}}">
+            <image class="bargain-banner" src="{{banner.path}}" mode="widthFix" />
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class="pagination">{{bannerIndex}}/{{bannerList.length}}</view>
+    </view>
+      
+    <!-- 2. 已砍价成功用户滚动字幕 -->
+    <view class="notification-container" wx:if="{{prizeList.length}}">
+      <swiper class="swiper-container" duration="750" vertical="true" autoplay="true" circular="true" interval="2000">
+        <block wx:for="{{prizeList}}" wx:key="{{index}}">
+          <swiper-item>
+            <view class="swiper-item">
+              <image class="avatar-icon" mode="aspectFill" src="{{item.portrait}}" />
+              <view class="notification-text text-ellipsis">{{item.prizeText}}</view>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+      <!-- 遮罩，用来盖住滚动通知swiper 禁止其手动滑动 -->
+      <view class="mask-panel"></view>
+    </view>
+    <!-- 3. 砍价商品列表 -->
+    <view class="bargain-goods-list">
+      <block wx:for="{{bargainGoodsList}}" wx:key="{{sku}}" wx:for-index="bargainGoods.sku" wx:for-item="bargainGoods">
+        <goods_item goods-info="{{bargainGoods}}" bind:goodsTapEvent="onGoodsTap" show-subtitle="{{true}}" type="-1"></goods_item>
+      </block>
+    </view>
+  </view>
+
+  <!-- 二、我的砍价商品 -->
+  <view class="goods-list-container" hidden="{{currentTab != 1}}">
+    <template is="noData" data="{{...noMyBargainGoodsData}}" />
+    <view>
+      <block wx:for="{{myBargainGoodsList}}" wx:key="{{sku}}" wx:for-item="bargainGoods">
+        <goods_item goods-info="{{bargainGoods}}" bind:goodsTapEvent="onGoodsTap" type="{{bargainGoods.status}}"></goods_item>
+      </block>
+    </view>
+
+    <!-- 上拉加载更多 -->
+    <block wx:if="{{loadMore.isReachBottom}}">
+      <view class="load-more-goods" wx:if="{{!loadMore.noMoreData}}">
+        <image class="load-more-gif" src="/images/pay-loading.gif"></image>
+        <text class="load-more-text">正在加载...</text>
+      </view>
+      <view wx:else class="no-more-data">已经到底啦~</view>
+    </block>
+  </view>
+
+  <!-- Tab切换按钮 -->
+  <view class="nav-tab" wx:if="{{currentTab==2 || currentTab==1}}">
+    <view class="nav-tab-item {{currentTab == 2 ? 'active' : ''}}" data-current="2" bindtap="switchTab">砍价商品</view>
+    <view class="nav-tab-item {{currentTab == 1 ? 'active' : ''}}" data-current="1" bindtap="switchTab">我的砍价</view>
+  </view>
+</view>

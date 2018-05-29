@@ -1,0 +1,175 @@
+@import '../../../../utils/templates/my_redpackage_item/my_redpackage_item.wxss';
+@import '../../../../utils/templates/product_voucher_item/product_voucher_item.wxss';
+@import '../../../../utils/templates/modal/modal.wxss';
+page {
+  background: #f0f0f0;
+  height: 100%;
+}
+
+.my-redpackage-list-container {
+}
+
+.no_bg {
+  background: #f0f0f0;
+}
+
+.redpackage-header {
+  background: #fff;
+  white-space: nowrap;
+  line-height: 98rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  border-top: 1px solid #e6e6e6;
+  font-size: 0;
+}
+
+.input-wrapper {
+  background: #f5f5f5;
+  position: relative;
+  border-radius: 4rpx;
+  margin-right: 94rpx;
+}
+
+.exchange-input {
+  background: #f5f5f5;
+  display: block;
+  font-size: 28rpx;
+  padding-left: .5em;
+}
+
+.clear-input {
+  position: absolute;
+  top: -4rpx;
+  right: 0;
+  z-index: 2;
+  width: 40rpx;
+  height: 40rpx;
+  padding: 10rpx;
+}
+
+.exchange-text {
+  float: right;
+  font-size: 32rpx;
+  color: #474245;
+  display: block;
+  text-align: center;
+  height: 100%;
+  line-height: 50rpx;
+  padding-left: 20rpx;
+  padding-right: 10rpx;
+}
+
+.redpackage-main {
+  padding:0 30rpx 20rpx 30rpx;
+}
+
+.describe-title {
+  line-height: 74rpx;
+  overflow: hidden;
+  min-height: 30rpx;
+}
+
+.end-time-tips {
+  font-size: 24rpx;
+  color: #969696;
+}
+
+.redpacket-count {
+  color: #ff4891;
+}
+
+/* .desc-text-wrapper {
+  float: right;
+}
+
+.describe-text{
+  font-size: 24rpx;
+  color: #969696;
+  display:inline-block;
+  vertical-align:middle;
+}
+
+.instruction-icon {
+  height: 36rpx;
+  width: 36rpx;
+  vertical-align: middle;
+} */
+
+.describe-text-left {
+  font-size: 24rpx;
+  color: #969696;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.instruction-icon-left {
+  height: 36rpx;
+  width: 36rpx;
+  vertical-align: middle;
+}
+
+.redpackage-list-container {}
+
+.redpackage-item-container {
+  margin-bottom: 20rpx;
+}
+
+.redpacket-select-header {
+  position: relative;
+  margin-top: 20rpx;
+}
+
+.no-redpacket {
+  font-size: 28rpx;
+  color: #474245;
+  padding: 0 40rpx;
+  line-height: 98rpx;
+  background: #fff;
+}
+
+.select-icon {
+  position: absolute;
+  right: 40rpx;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  height: 40rpx;
+  width: 40rpx;
+  border: 1px solid #e6e6e6;
+}
+
+.redpacket-list-empty {
+  text-align: center;
+}
+
+.voucher-icon-bg {
+  width: 180rpx;
+  height: 180rpx;
+  display: block;
+  margin: 300rpx auto 24rpx;
+}
+
+.redpacket-empty-text {
+  font-family: PingFang-SC-Regular;
+  font-size: 28rpx;
+  color: #969696;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.product-voucher-container {
+  margin-bottom: 30rpx;
+}
+
+.no-more-product-voucher {
+  font-size: 26rpx;
+  color: #979797;
+  text-align: center;
+  width: 100%;
+  padding-bottom: 30rpx;
+}
+
+.checkout-inactive-product-voucher {
+  color: #ff4891;
+}

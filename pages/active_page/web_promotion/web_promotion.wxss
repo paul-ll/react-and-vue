@@ -1,0 +1,76 @@
+/**web_promotion.wxss**/
+/* product-item组件样式 */
+@import '../../../utils/templates/product_item/product_item.wxss';
+@import '../../../utils/templates/cart_icon/cart_icon.wxss';
+
+.promotion-info-item-image, .below-info-image {
+    display: block;
+    width: 100%;
+}
+
+.products-title {
+    height: 94rpx;
+    line-height: 94rpx;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 32rpx;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.left-line, .right-line {
+    display: inline-block;
+    vertical-align: middle;
+    height: 1px;
+    background: #262626;
+    width: 50rpx;
+}
+
+.left-line {
+
+}
+
+.title-text {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 20rpx;
+}
+
+.right-line {
+
+}
+
+.skip-btn-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    color: #fff;
+    text-align: center;
+    font-size: 32rpx;
+    z-index: 31;
+}
+
+.skip-btn {
+    margin: 14rpx 30rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    border-radius: 4rpx;
+    background: #ff4891;
+}
+/* 
+.btn-text {
+    display: inline-block;
+    vertical-align: middle;
+} */
+/* 
+.coupon-arrow {
+    width: 34rpx;
+    height: 34rpx;
+    vertical-align: middle;
+    margin-left: 10rpx;
+} */
+
+.blank-filler {
+    height: 94rpx;
+}

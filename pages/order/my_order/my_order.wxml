@@ -1,0 +1,73 @@
+<!-- 小神推事件抓取组件 -->
+<import src="../../template/template.wxml" />
+<template wx:if="{{!is_showHideBtn}}" is='hideBtn' data="{{hideBtnData}}"></template>
+<!--my_order.wxml-->
+
+<import src="/utils/templates/no_network/no_network.wxml" />
+<template is="network" data="{{...network}}" />
+
+<block wx:if="{{reconnecting == true}}">
+  <view class="network-reconnect">
+    <image class="loadingimg" src='/images/loading-gif-vip.gif' mode='aspectFit'></image>
+  </view>
+</block>
+<view class="container">
+  <view class="order-section" wx:if="{{isLoad==true}}">
+    <view wx:key="{{myOrderItems.id}}" wx:for="{{myOrderItems}}" wx:for-item="myOrderItem" class='my-order-item'>
+      <view class="my-order-item-time">
+        <view class="my-order-item-created-time">{{myOrderItem.created_time}}</view>
+        <view class="my-order-item-arrive">
+          <image class="arrive-image" src="{{myOrderItem.chrome_tag_img}}" mode="widthFix"></image>
+        </view>
+        <!-- <view class="my-order-item-arrive" wx:if="{{myOrderItem.chrome_info!=null && myOrderItem.chrome_info.over_time>0 && myOrderItem.status!='CANCELED' && myOrderItem.status!='PAID_CANCELED'}}">
+                    <view class="arrive-time">{{overTimeList[myOrderItem.order_no]}}</view>
+                </view> -->
+        <!-- <view class="my-order-item-arrive" wx:elif="{{myOrderItem.nationwide==1}}">
+                    <image src="/images/all-city.png" class="arrive-image" mode="aspectFit"></image>
+                </view>
+                <view class="my-order-item-arrive" wx:else>
+                    <image src="{{}}" class="arrive-image" mode="aspectFit"></image>
+                </view> -->
+        <view class="time-count-down"></view>
+      </view>
+      <view class="my-order-item-products">
+        <view class="my-order-item-products-scroll" data-my-order-item-id="{{myOrderItem.id}}" bindtap="openDetail">
+          <scroll-view class="my-order-item-products-scroll-view" scroll-x="true">
+            <view wx:key="{{myOrderItemProduct.image}}" wx:for="{{myOrderItem.order_items}}" wx:for-item="myOrderItemProduct" class='my-order-item-product'>
+              <image src="{{myOrderItemProduct.image}}" class="product-image" style="opacity:{{opacityShow[myOrderItem.status]}};" mode="aspectFit"></image>
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+      <view class="my-order-item-distribution">
+        <view class="my-order-item-status-list">
+          <view wx:key="{{statusImageIndexs}}" wx:for="{{statusShow[myOrderItem.status].imageIndex.length}}" class="my-order-item-status" wx:for-item="statusImageIndex">
+            <image class="my-order-item-status-image" src="{{statusImages[statusImageIndex][statusShow[myOrderItem.status].imageIndex[statusImageIndex]]}}" mode="aspectFit"></image>
+            <view class="my-order-item-status-text">{{statusShow[myOrderItem.status].statusText[statusImageIndex]}}</view>
+          </view>
+        </view>
+        <view class="my-order-item-pay-price">
+          <view class="my-order-item-total">￥{{myOrderItem.price_area.pay_price / 100 || 0}}</view>
+        </view>
+      </view>
+      <view class="my-order-item-detail">
+        <view class="my-order-item-look-detail {{myOrderItem.status == 'PAID' || myOrderItem.status == 'SHIPPED' || myOrderItem.status == 'PENDING' ? '' : 'my-order-item-look-detail-inactive'}}" data-my-order-item-id="{{myOrderItem.id}}" catchtap="openDetail"
+          wx:if="{{myOrderItem.status=='PENDING'}}">去支付</view>
+        <view class="my-order-item-look-detail {{myOrderItem.status == 'PAID' || myOrderItem.status == 'SHIPPED' || myOrderItem.status == 'PENDING' ? '' : 'my-order-item-look-detail-inactive'}}" data-my-order-item-id="{{myOrderItem.id}}" catchtap="openDetail"
+          wx:else>查看详情</view>
+        <view class='my-order-item-look-detail my-order-item-look-detail-inactive' wx:if="{{myOrderItem.refund_expire==0&&myOrderItem.status=='FINISHED'}}" data-order_id='{{myOrderItem.id}}'  bindtap='goRefund'>{{myOrderItem.ever_refunded==0?'申请退款':'退款详情'}}</view>
+      </view>
+    </view>
+
+    <view class="my-order-empty" wx:if="{{myOrderItems.length<=0}}">
+      <image class="my-order-empty-image" src="/images/no_order.png" mode="aspectFit"></image>
+      <view class="my-order-empty-text">
+        <text class="text">您还没有相关订单呀～</text>
+      </view>
+    </view>
+  </view>
+  <view wx:elif="{{isLoad==false}}">
+    <image src="/images/loading-gif-vip.gif" class="myorder-loading"></image>
+  </view>
+
+</view>

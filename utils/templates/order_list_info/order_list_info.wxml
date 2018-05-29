@@ -1,0 +1,11 @@
+<template name="order-list-info">
+  <view class="order-detail-express-wraper" wx:if="{{orderExpressMsg.length>0}}">
+      <view class="order-detail-express">
+          <view class="order-detail-express-msg" wx:for='{{orderExpressMsg}}' wx:for-item='expressMsg'>
+              <view class="order-detail-express-msg-status">{{expressMsg.message}}</view>
+              <view class="order-detail-express-msg-time">{{expressMsg.time}}</view>
+              <image class="order-spot" src='/images/order-{{index == 0 ? "" : "not-"}}checked.png'></image>
+          </view>
+      </view>
+  </view>
+</template>

@@ -1,0 +1,29 @@
+.getUserInfoArea {
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 102;
+}
+
+.getUserInfoCenter {
+    margin: 50% auto;
+    text-align: center;
+}
+
+.getUserInfoTipText {
+    color: white;
+    font-size: 28rpx;
+}
+
+.getUserInfoTipBtn {
+    background: #ff4891;
+    padding: 0rpx 40rpx;
+    color: white;
+    display: inline-block;
+    border-radius: 10rpx;
+    margin-top: 10rpx;
+    font-size: 32rpx;
+}

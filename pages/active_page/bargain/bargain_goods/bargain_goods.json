@@ -1,0 +1,7 @@
+{
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "goods_item": "/pages/active_page/bargain/components/goods_item/goods_item",
+    "user_no_rule": "/utils/components/user_no_rule/user_no_rule"
+   }
+}

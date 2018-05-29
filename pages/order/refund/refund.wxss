@@ -1,0 +1,312 @@
+@import "/utils/templates/no_data/no_data.wxss";
+
+page {
+  background: #f5f5f5;
+}
+
+.goodsDetail {
+  width: 100%;
+  height: 180rpx;
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+
+.goodsImg {
+  width: 106rpx;
+  height: 106rpx;
+  position: relative;
+  margin-left: 36rpx;
+}
+
+.goodsImg image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.rightInfo {
+  width: 542rpx;
+  height: 180rpx;
+  margin-left: 30rpx;
+}
+
+.goodsName {
+  width: 100%;
+  margin-top: 41rpx;
+  font-size: 32rpx;
+  color: #474346;
+}
+
+.numAndPrice {
+  width: 100%;
+  margin-top: 10rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.num, .detailPrice {
+  font-size: 24rpx;
+  color: #969696;
+}
+
+.payPrice {
+  height: 98rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  margin: 0 30rpx;
+  border-bottom: solid 1rpx #e6e6e6;
+}
+
+.alert {
+  font-size: 28rpx;
+  color: #474346;
+}
+
+.payMargin {
+  margin-top: 20rpx;
+}
+
+.price {
+  color: #ff4891;
+  font-size: 28rpx;
+}
+
+.priceAndExplain {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.explay {
+  width: 28rpx;
+  height: 28rpx;
+  position: relative;
+  margin-left: 16rpx;
+}
+
+.explay image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.problem {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.problemItem {
+  border-radius: 6rpx;
+  border: 1rpx solid #e6e6e6;
+  font-size: 24rpx;
+  color: #969696;
+  padding: 0 10rpx;
+  margin: 0 10rpx;
+}
+
+.selectItem {
+  border: 1rpx solid #ff4891 !important;
+  color: #ff4891 !important;
+}
+
+.alertleft {
+  height: 100%;
+}
+
+.alertOne {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #474346;
+}
+
+.alertSub {
+  margin-top: 5rpx;
+  font-size: 20rpx;
+  color: #969696;
+}
+
+.noLine {
+  border: none;
+}
+
+.detail {
+  background-color: white;
+  margin-top: 20rpx;
+  overflow: hidden;
+}
+
+.detailText {
+  width: 690rpx;
+  height: 174rpx;
+  margin: 0 auto;
+  font-size: 28rpx;
+  margin-top: 30rpx;
+  background: #f5f5f5;
+  padding: 12rpx;
+  box-sizing: border-box;
+  color: #474346;
+  position: relative;
+
+}
+
+.placeClass{
+  color:#c6c6c6;
+}
+
+.lucencyColor{
+  color: rgba(0, 0, 0, 0)
+}
+
+.count {
+  position: absolute;
+  right: 15rpx;
+  bottom: 10rpx;
+  font-size: 24rpx;
+  color: #c6c6c6;
+}
+
+.label {
+  margin: 0 auto;
+  margin-top: 32rpx;
+  width: 690rpx;
+  overflow: hidden;
+}
+
+.labelItem {
+  float: left;
+  border-radius: 6rpx;
+  border: 1rpx solid #e6e6e6;
+  font-size: 24rpx;
+  color: #969696;
+  padding: 0 10rpx;
+  margin: 10rpx 10rpx;
+}
+
+.prompt {
+  width: 690rpx;
+  margin: 0 auto;
+  font-size: 20rpx;
+  color: #c6c6c6;
+  padding-bottom: 40rpx;
+}
+
+.sureBg {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 108rpx;
+  width: 100%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sure {
+  background: #ff4891;
+  border-radius: 2px;
+  height: 80rpx;
+  width: 690rpx;
+  font-size: 32rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 80rpx;
+}
+
+.addImg {
+  width: 690rpx;
+  /* height: 120rpx; */
+  margin: 26rpx auto;
+  overflow: hidden;
+}
+
+.imgItem {
+  float: left;
+  margin-right: 20rpx;
+  margin-top: 20rpx;
+  width: 120rpx;
+  height: 120rpx;
+  position: relative;
+}
+
+.closeImg {
+  position: absolute;
+  right: -10rpx;
+  top: -10rpx;
+  height: 42rpx;
+  width: 42rpx;
+}
+
+image {
+  overflow: visible;
+}
+
+.bounced {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.close {
+  position: absolute;
+  width: 560rpx;
+  height: 84rpx;
+  top: 100rpx;
+  left: 95rpx;
+}
+
+.close image {
+  position: absolute;
+  height: 84rpx;
+  width: 48rpx;
+  right: 0;
+  top: 0;
+}
+
+.bouncedContent {
+  width: 560rpx;
+  height: 740rpx;
+  margin: 0 auto;
+  margin-top: 184rpx;
+  overflow: hidden;
+  position: relative;
+}
+
+.bouncedContent>image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+   z-index: -1; 
+}
+
+.bouncedTitle {
+  margin-top: 332rpx;
+  margin-left: 52rpx;
+  font-size: 32rpx;
+  color: #ff4891;
+}
+
+.boundeOne {
+  font-size: 28rpx;
+  color: #474245;
+  margin-left: 52rpx;
+  margin-top: 66rpx;
+}
+
+.boundeTwo {
+  font-size: 24rpx;
+  color: #474245;
+  margin-left: 52rpx;
+  margin-top: 16rpx;
+}
